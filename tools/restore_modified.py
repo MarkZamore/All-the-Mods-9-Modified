@@ -21,6 +21,7 @@ from urllib.request import Request, urlopen
 import import_upstream
 import verify_modified as verifier
 import atm9_base_jar_overrides as base_jars
+import multiplayer_warning_policy
 
 CHUNK = 1024 * 1024
 USER_AGENT = "LANMinecraft-ATM9-ModifiedLockedRestore/1"
@@ -129,6 +130,7 @@ def prevalidate_base_inputs(pack: Path, plan: dict):
     overrides = {row["original"]["path"]: row for row in plan["baseJarOverrides"]}
     committed_overrides = {row["path"] for row in plan["upstream"]["overrides"]}
     memory_warning = plan.get("memoryWarningPolicy")
+    multiplayer_warning = plan.get("multiplayerWarningAuthor")
     for original in plan["originalBaseRows"]:
         path = verifier.target_path(pack, original["path"])
         if not path.exists():
@@ -139,6 +141,9 @@ def prevalidate_base_inputs(pack: Path, plan: dict):
         if memory_warning is not None and original["path"] == memory_warning.author["path"]:
             verifier.require(memory_warning.accepts(path.read_bytes()),
                              "Unknown Memory Settings configuration; review the author update")
+            continue
+        if original == multiplayer_warning:
+            multiplayer_warning_policy.author_bytes(path.read_bytes(), original)
             continue
         if (matches(path, original) or plan["questLocalization"] and matches(path, effective[original["path"]]) or
                 override and override["replacement"]["path"] == original["path"] and matches(path, override["replacement"])):
@@ -252,6 +257,12 @@ def restore(pack: Path, cache: Path) -> dict:
     memory_warning = plan.get("memoryWarningPolicy")
     if memory_warning is not None:
         memory_warning.normalize()
+    multiplayer_warning = plan.get("multiplayerWarningAuthor")
+    if multiplayer_warning is not None:
+        options_path = verifier.target_path(pack, multiplayer_warning["path"])
+        original_options = multiplayer_warning_policy.author_bytes(options_path.read_bytes(), multiplayer_warning)
+        if options_path.read_bytes() != original_options:
+            options_path.write_bytes(original_options)
     # This validates every existing baseline byte first and refuses modified
     # author configs/scripts/JARs. Extra Modified files are intentionally not
     # deleted by the original importer; the combined verifier accounts for them.
@@ -271,6 +282,11 @@ def restore(pack: Path, cache: Path) -> dict:
     run_quest_localization(pack, plan, "apply")
     if memory_warning is not None:
         memory_warning.apply()
+    if multiplayer_warning is not None:
+        options = options_path.read_bytes()
+        prepared_options = multiplayer_warning_policy.apply(options)
+        if options != prepared_options:
+            options_path.write_bytes(prepared_options)
     result = verifier.verify(pack)
     result.update({"restoredAdditionalJars": installed, "downloadedAdditionalJars": downloaded,
                    "baseRestore": "import_upstream --restore-locked-files", "personalInstallationsTouched": False,

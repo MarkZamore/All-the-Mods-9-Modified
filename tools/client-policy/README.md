@@ -1,4 +1,19 @@
-# Native memory recommendation policy
+# Client policy
+
+## Multiplayer warning
+
+Keep `skipMultiplayerWarning` enabled in `policy.json` when importing a new
+author version. On Minecraft 1.20.1, `restore_modified.py` resolves the
+author's active DefaultSettings profile, verifies its locked source bytes,
+and sets or adds the single line `skipMultiplayerWarning:true`. All other
+options and the DefaultSettings metadata are preserved. The normal
+`generate_manifest.py --verify-all` step checks the actual archived options
+and their manifest entry before publication. An author update that removes
+DefaultSettings or changes the game version requires review of the new
+defaults mechanism. The tool runs on the source checkout during preparation
+and does not edit players' `options.txt` files.
+
+## Native memory recommendation
 
 `kubejs/client_scripts/lanmc_memory_warning_policy.js` uses the native Memory
 Settings config API to set only the loaded `disableWarnings=true` option before

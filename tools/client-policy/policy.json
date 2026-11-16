@@ -1,6 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "pack-owned-native-client-policy",
+  "skipMultiplayerWarning": true,
   "earlyClientWarning": {
     "originalMinimum": 8192,
     "effectiveSizeBytes": 1818,

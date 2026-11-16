@@ -31,6 +31,7 @@ from __future__ import annotations
 from pack_library import stage_library, verify_library
 import network_logging_policy
 import carpets_recipe_policy
+import multiplayer_warning_policy
 import waypoint_source_policy
 
 import argparse
@@ -413,6 +414,7 @@ def verify_only(out: Path, verify_all: bool = False) -> None:
                  f"expected {asset['sha256']}/{asset['sizeBytes']}, "
                  f"got {actual_sha}/{actual_size}")
         print(f"verify ok: {asset['name']}")
+    multiplayer_warning_policy.verify_staged(out, manifest)
     print(f"verified {len(sample)} of {len(assets)} staged assets")
 
 

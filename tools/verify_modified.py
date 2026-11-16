@@ -23,6 +23,7 @@ import pack_library
 import atm9_base_jar_overrides
 import carpets_recipe_policy
 import memory_warning_policy
+import multiplayer_warning_policy
 import waypoint_source_policy
 
 CONTENT_ROOTS = {"mods", "config", "kubejs", "scripts", "defaultconfigs", "data",
@@ -411,6 +412,22 @@ def load_plan(pack: Path) -> dict:
     if memory_warning is not None:
         base_rows = [memory_warning.effective if row["path"] == memory_warning_policy.CONFIG else row
                      for row in base_rows]
+    multiplayer_warning = None
+    client_policy = target_path(pack, "tools/client-policy/policy.json")
+    if client_policy.is_file() and read_json(client_policy).get("skipMultiplayerWarning") is True:
+        require(upstream["pack"]["minecraftVersion"] == "1.20.1",
+                "Review the multiplayer warning policy for the new Minecraft version")
+        originals = {row["path"]: row for row in original_base_rows}
+        config = originals.get(multiplayer_warning_policy.CONFIG)
+        require(config is not None, "The author removed DefaultSettings; review the multiplayer warning policy")
+        check_file(pack, config, "Author DefaultSettings configuration")
+        relative = multiplayer_warning_policy.profile_options(target_path(pack, config["path"]).read_bytes())
+        multiplayer_warning = originals.get(relative)
+        require(multiplayer_warning is not None, "The author removed the active DefaultSettings options file")
+        raw = target_path(pack, relative).read_bytes()
+        author = multiplayer_warning_policy.author_bytes(raw, multiplayer_warning)
+        effective = multiplayer_warning_policy.record(relative, multiplayer_warning_policy.apply(author))
+        base_rows = [effective if row["path"] == relative else row for row in base_rows]
     for row in base_rows:
         seen.add(row["path"].casefold())
     files, support = lock.get("files"), lock.get("supportFiles", [])
@@ -451,6 +468,7 @@ def load_plan(pack: Path) -> dict:
     return {"pack": pack, "lock": lock, "upstream": upstream, "baseRows": base_rows,
             "originalBaseRows": original_base_rows, "questLocalization": quest_profile, "baseReplacements": replacements,
             "memoryWarningPolicy": memory_warning,
+            "multiplayerWarningAuthor": multiplayer_warning,
             "questBaseRows": quest_base_rows, "baseJarOverrides": jar_overrides,
             "files": files, "supportFiles": support, "baseIds": set(base_ids), "platform": platform}
 

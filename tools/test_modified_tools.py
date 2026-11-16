@@ -86,6 +86,35 @@ class ModifiedCompositionTests(unittest.TestCase):
         self.assertFalse(report["runtimeInventoryVerified"])
         self.assertFalse(report["runtimeAcceptanceClaimed"])
 
+    def test_restore_reapplies_warning_policy_to_updated_author_profile(self):
+        config_path = "config/defaultsettings.json"
+        self.write(config_path, {"mainProfile": "NewProfile"})
+        self.write("tools/client-policy/policy.json", {"skipMultiplayerWarning": True})
+        options = self.pack / "config/defaultsettings/NewProfile/options.txt"
+        options.parent.mkdir(parents=True)
+        upstream_path = self.pack / "tools/upstream-lock.json"
+        upstream = json.loads(upstream_path.read_bytes())
+        original_overrides = upstream["overrides"]
+        original_config = (self.pack / config_path).read_bytes()
+        for before, after in (
+            (b"lang:ru_ru\nskipMultiplayerWarning:false\n", b"lang:ru_ru\nskipMultiplayerWarning:true\n"),
+            (b"fov:0.75\r\n", b"fov:0.75\r\nskipMultiplayerWarning:true\r\n"),
+        ):
+            with self.subTest(before=before):
+                options.write_bytes(before)
+                upstream["overrides"] = [*original_overrides, self.record(self.pack / config_path),
+                                         self.record(options)]
+                self.write("tools/upstream-lock.json", upstream)
+                self.lock["upstreamLockSha256"] = verify_modified.sha256(upstream_path)
+                self.save_lock()
+                with self.assertRaisesRegex(ValueError, "Author baseline file"):
+                    verify_modified.verify(self.pack)
+                for _ in range(2):
+                    restore_modified.restore(self.pack, self.cache)
+                    self.assertEqual(options.read_bytes(), after)
+                    self.assertEqual((self.pack / config_path).read_bytes(), original_config)
+                    self.assert_base_unchanged()
+
     def test_same_size_author_config_corruption_is_not_overwritten(self):
         config = self.pack / "config/base.toml"
         corruption = b"x" * len(self.original_config)
