@@ -289,7 +289,7 @@ class ModifiedCompositionTests(unittest.TestCase):
             shutil.copyfile(source / relative, destination)
         selector = self.pack / jvm
         selector.write_text("\n".join(line for line in selector.read_text(encoding="utf-8").splitlines()
-                                      if line != "-javaagent:" + verify_modified.ILLUSIONER_COMPAT_AGENT) + "\n", encoding="utf-8")
+                                      if line != "-javaagent:" + verify_modified.FORGE_COMPAT_AGENT) + "\n", encoding="utf-8")
         records = {
             relative: self.record(self.pack / relative) for relative in (agent, jvm, owners)
         }
@@ -318,25 +318,27 @@ class ModifiedCompositionTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "Executable/helper"):
             verify_modified.validate_support_resource({**row, "kind": "resource"})
 
-    def test_illusioner_compatibility_is_bound_to_both_jars_and_loader(self):
-        path = verify_modified.ILLUSIONER_COMPAT_AGENT
+    def test_forge_client_compatibility_requires_pinned_input_jars_and_loader(self):
+        path = verify_modified.FORGE_COMPAT_AGENT
         (self.pack / path).parent.mkdir(parents=True, exist_ok=True)
         (self.pack / path).write_bytes(b"test-only compatibility agent fixture")
         (self.pack / verify_modified.EXPERIMENTAL_JVM).write_text("-javaagent:" + path + "\n", encoding="utf-8")
         platform = {"minecraftVersion": "1.20.1", "loader": {"type": "forge", "version": "47.4.29"}}
-        inputs = {mod_id: {"path": f"mods/{mod_id}.jar", "sha256": "f" * 64}
-                  for mod_id in verify_modified.ILLUSIONER_COMPAT_IDS}
-        files = [{**record, "modIds": [mod_id]} for mod_id, record in inputs.items()]
+        inputs = {mod_id: {"path": relative, "sha256": "f" * 64}
+                  for mod_id, relative in verify_modified.FORGE_COMPAT_INPUTS.items()}
+        files = [record.copy() for record in inputs.values()]
         support = [{**self.record(self.pack / path), "inputs": inputs, "platform": platform,
-                    "kind": verify_modified.ILLUSIONER_COMPAT_KIND, "reason": "Reviewed fix"}]
-        verify = verify_modified.verify_illusioner_compatibility
+                    "kind": verify_modified.FORGE_COMPAT_KIND, "reason": "Reviewed fix"}]
+        verify = verify_modified.verify_forge_client_compatibility
         verify(self.pack, support, files, platform)
-        with self.assertRaisesRegex(ValueError, "both exact content mods"):
-            verify(self.pack, support, files[:1], platform)
+        with self.assertRaisesRegex(ValueError, "requires all reviewed input JARs"):
+            verify(self.pack, support, files[:-1], platform)
+        with self.assertRaisesRegex(ValueError, "requires one JVM selector"):
+            verify(self.pack, [], files, platform)
         with self.assertRaisesRegex(ValueError, "changed Minecraft/Forge platform"):
             verify(self.pack, support, files, {**platform, "loader": {"type": "forge", "version": "47.4.30"}})
         files[0]["sha256"] = "0" * 64
-        with self.assertRaisesRegex(ValueError, "changed Illusioner or Shooting Star bytes"):
+        with self.assertRaisesRegex(ValueError, "changed input JAR bytes"):
             verify(self.pack, support, files, platform)
 
     def test_final_verification_requires_real_current_source_jar_inventory(self):

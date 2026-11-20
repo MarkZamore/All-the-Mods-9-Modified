@@ -15,7 +15,7 @@ import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.*;
 
-/** Pack-only compatibility for the two respawn screen handlers. */
+/** Pack-only compatibility for reviewed Forge client mixin handlers. */
 public final class ShootingStarMixinBridge implements ClassFileTransformer {
     private static final String MIXIN_INFO = "org/spongepowered/asm/mixin/transformer/MixinInfo";
     private static final String MIXIN_INFO_SHA = "6affb8b0409394aa787ac04133051ec542d2a3bf79f2e455b71a8d6ad107fdf5";
@@ -85,7 +85,10 @@ public final class ShootingStarMixinBridge implements ClassFileTransformer {
     }
 
     public static boolean patchMixinClass(String name, Object node) {
-        if (name == null || !TARGET.equals(name.replace('.', '/'))) return false;
+        if (name == null) return false;
+        String internalName = name.replace('.', '/');
+        boolean lucent = LucentBlockChangePatch.TARGET.equals(internalName);
+        if (!lucent && !TARGET.equals(internalName)) return false;
         try {
             // The real ClassNode and its visitor live in Forge's ASM module. Only
             // the reviewed MethodNode crosses back, using that same ASM identity.
@@ -98,7 +101,7 @@ public final class ShootingStarMixinBridge implements ClassFileTransformer {
             var original = (byte[]) writerType.getMethod("toByteArray").invoke(writer);
             var type = new ClassNode();
             new ClassReader(original).accept(type, 0);
-            int index = patchHandler(type);
+            int index = lucent ? LucentBlockChangePatch.patch(type) : patchHandler(type);
             if (index < 0) return false;
             var output = new ClassWriter(0);
             type.accept(output);
@@ -108,7 +111,9 @@ public final class ShootingStarMixinBridge implements ClassFileTransformer {
             readerType.getMethod("accept", foreignVisitor, int.class).invoke(reader, replacementNode, 0);
             var methods = foreignNode.getField("methods");
             replaceMethod(methods.get(node), methods.get(replacementNode), index);
-            System.out.println(PREFIX + "Composed the Shooting Star and Illusioner respawn screen handlers");
+            System.out.println(lucent
+                ? "[ATM9 Modified Lucent compatibility] Restricted block-change lighting to the client level"
+                : PREFIX + "Composed the Shooting Star and Illusioner respawn screen handlers");
             return true;
         } catch (ReflectiveOperationException failure) {
             throw new IllegalStateException(PREFIX + "Cannot transfer the measured mixin method", failure);

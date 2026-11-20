@@ -61,9 +61,15 @@ EXPERIMENTAL_AGENT_KIND = "experimental-confirmation-agent"
 EXPERIMENTAL_POLICY = "tools/experimental-warnings/policy"
 EXPERIMENTAL_JVM = "launcher/jvm-args.txt"
 EXPERIMENTAL_OWNERSHIP = "launcher/pack-owned.txt"
-ILLUSIONER_COMPAT_AGENT = "config/lanminecraft/illusioner-shooting-star-compat.jar"
-ILLUSIONER_COMPAT_KIND = "illusioner-shooting-star-compatibility-agent"
-ILLUSIONER_COMPAT_IDS = {"illusioner", "shooting_star_demo"}
+FORGE_COMPAT_AGENT = "config/lanminecraft/forge-client-compat.jar"
+FORGE_COMPAT_KIND = "forge-client-compatibility-agent"
+FORGE_COMPAT_INPUTS = {
+    "illusioner": "mods/the-illusioner-1.1.4-1.20.1-forge.jar",
+    "shooting_star_demo": "mods/the-shooting-star-demo-1.5.1-forge.jar",
+    "lucent": "mods/lucent-1.20.1-1.5.5.jar",
+    "embeddium": "mods/embeddium-0.3.31+mc1.20.1.jar",
+    "oculus": "mods/mekalus-mc1.20.1-1.8.0.1.jar",
+}
 
 
 def read_json(path: Path):
@@ -132,8 +138,8 @@ def validate_support_resource(row: dict):
     relative = row["path"]
     if row.get("kind") == EXPERIMENTAL_AGENT_KIND:
         require(relative == EXPERIMENTAL_AGENT, "Unexpected path for the experimental confirmation agent: " + relative)
-    elif row.get("kind") == ILLUSIONER_COMPAT_KIND:
-        require(relative == ILLUSIONER_COMPAT_AGENT, "Unexpected path for the Illusioner compatibility agent: " + relative)
+    elif row.get("kind") == FORGE_COMPAT_KIND:
+        require(relative == FORGE_COMPAT_AGENT, "Unexpected path for the Forge compatibility agent: " + relative)
     else:
         require(relative.split("/", 1)[0] in CONTENT_ROOTS - {"mods"}
                 and row.get("kind") in {"configuration", "resource"},
@@ -165,22 +171,23 @@ def verify_experimental_confirmation(pack: Path, support: list[dict]):
     runpy.run_path(str(verifier))["verify"](pack)
 
 
-def verify_illusioner_compatibility(pack: Path, support: list[dict], files: list[dict], platform: dict):
-    agent = next((row for row in support if row["path"] == ILLUSIONER_COMPAT_AGENT), None)
-    targets = {mod_id: {key: row[key] for key in ("path", "sha256")}
-               for row in files for mod_id in row["modIds"] if mod_id in ILLUSIONER_COMPAT_IDS}
+def verify_forge_client_compatibility(pack: Path, support: list[dict], files: list[dict], platform: dict):
+    agent = next((row for row in support if row["path"] == FORGE_COMPAT_AGENT), None)
+    by_path = {row["path"]: row for row in files}
+    targets = {mod_id: {"path": relative, "sha256": by_path[relative]["sha256"]}
+               for mod_id, relative in FORGE_COMPAT_INPUTS.items() if relative in by_path}
     selector = target_path(pack, EXPERIMENTAL_JVM)
-    line = "-javaagent:" + ILLUSIONER_COMPAT_AGENT
+    line = "-javaagent:" + FORGE_COMPAT_AGENT
     occurrences = (selector.read_text(encoding="utf-8-sig").splitlines().count(line)
                    if selector.is_file() else 0)
-    if targets.keys() != ILLUSIONER_COMPAT_IDS:
-        require(agent is None and occurrences == 0, "Illusioner compatibility agent requires both exact content mods")
+    if not targets and agent is None and occurrences == 0:
         return
-    require(agent is not None and occurrences == 1, "Illusioner and Shooting Star require their exact compatibility agent")
-    require(agent.get("inputs") == targets, "Review the compatibility agent for changed Illusioner or Shooting Star bytes")
+    require(targets.keys() == FORGE_COMPAT_INPUTS.keys(), "Forge compatibility requires all reviewed input JARs")
+    require(agent is not None and occurrences == 1, "Forge client compatibility agent requires one JVM selector")
+    require(agent.get("inputs") == targets, "Review Forge client compatibility for changed input JAR bytes")
     version = {key: platform[key] for key in ("minecraftVersion", "loader")}
-    require(agent.get("platform") == version, "Review Illusioner compatibility for the changed Minecraft/Forge platform")
-    check_file(pack, agent, "Illusioner and Shooting Star compatibility agent")
+    require(agent.get("platform") == version, "Review client compatibility for the changed Minecraft/Forge platform")
+    check_file(pack, agent, "Forge client compatibility agent")
 
 
 def verify_retired_diagnostics(pack: Path):
@@ -544,7 +551,7 @@ def load_plan(pack: Path) -> dict:
             "Platform differs from the frozen author Minecraft version or locked delivery loader")
     require(platform.get("clientJar", "") == "", "The published pack must use the official Minecraft client download")
     verify_experimental_confirmation(pack, support)
-    verify_illusioner_compatibility(pack, support, files, platform)
+    verify_forge_client_compatibility(pack, support, [*base_rows, *files], platform)
     return {"pack": pack, "lock": lock, "upstream": upstream, "baseRows": base_rows,
             "originalBaseRows": original_base_rows, "questLocalization": quest_profile, "baseReplacements": replacements,
             "memoryWarningPolicy": memory_warning,

@@ -14,8 +14,8 @@
       "sha256": "8d91a80b1f16299c902ef678383312ea6c293a0fbd1a8fea66414ccda44a1d97"
     },
     "launcher/jvm-args.txt": {
-      "sizeBytes": 178,
-      "sha256": "a8b7553303f2e3213132c07ad365d58436146da087210adc0c5b3311a65a1d88"
+      "sizeBytes": 166,
+      "sha256": "838606724fb03194e69faaa12c0e5c836d10dd24345ea8eafbb3ca48e94833fb"
     },
     "launcher/pack-owned.txt": {
       "sizeBytes": 246,

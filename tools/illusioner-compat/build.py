@@ -1,4 +1,4 @@
-"""Build the deterministic ATM9 Modified Illusioner and Shooting Star compatibility agent."""
+"""Build the deterministic ATM9 Modified Forge client compatibility agent."""
 
 import argparse
 import hashlib
@@ -27,7 +27,8 @@ def build(output, asm, tree, javac):
         classes = Path(directory)
         subprocess.run([str(javac), "--release", "17", "-encoding", "UTF-8", "-classpath",
                         os.pathsep.join(str(path) for path in (asm, tree)), "-d", str(classes),
-                        str(ROOT / "IllusionerShootingStarAgent.java"), str(ROOT / "ShootingStarMixinBridge.java")], check=True)
+                        str(ROOT / "IllusionerShootingStarAgent.java"), str(ROOT / "ShootingStarMixinBridge.java"),
+                        str(ROOT / "LucentBlockChangePatch.java")], check=True)
         files = {path.relative_to(classes).as_posix(): path.read_bytes() for path in classes.rglob("*.class")}
         for path in (asm, tree):
             with zipfile.ZipFile(path) as library:

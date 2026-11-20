@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "policy": "steam-only-automatic-server-list-v1",
-  "reviewedInventorySha256": "58bba1f755222ae8042a8d7ba0df6b3d6a20b403e37d1c3ba4f971df3bf581b6",
+  "reviewedInventorySha256": "3667b4a13c200de78eecc9ae80bc9bf6dd192b38fbeaf8fd0db3b95dcc034db8",
   "scope": "Exact current delivery, no shipped NBT seeds, reviewed text menus and automatic-list selectors. New binary/config/script/resource input requires explicit re-audit before publication.",
   "personalServerLists": "Never read or rewritten; manually saved addresses are preserved.",
   "autoRepin": false,
   "checkerSource": "https://github.com/MarkZamore/LANMinecraft/blob/940a5629a231eb608bad3b0772df0a5c8623966f/tools/PackData/ServerPolicy/public_server_policy.py",
   "reviewedParentManifestRevision": "a73c77cea71802fa1faef20421b79eea074e758e",
   "reviewedParentManifestSha256": "d9d008afd8b853a0e8e68e88757c6065da87876ae143a344422232d3d693e282",
-  "reviewedPayloadChange": "Added The Illusioner, 18 anime mods, Whispering Spirits and RunicLib. Replaced Core Lib 1.1.18 with the official 1.1.26b Forge build. Moved the loader to Forge 47.4.29, updated the experimental-world agent, added the Illusioner and Shooting Star client respawn-screen bridge with its JVM selector, and updated the controls preset and guide.",
+  "reviewedPayloadChange": "Added The Illusioner, 18 anime mods, Whispering Spirits and RunicLib. Replaced Core Lib 1.1.18 with the official 1.1.26b Forge build. Moved to Forge 47.4.29, updated the experimental-world agent, and added a client bridge for the Illusioner and Shooting Star respawn screen and Lucent's logical-client lighting hook. Reviewed the JVM selectors and controls preset.",
   "reviewUpdateReason": "Audited the 23 added, one removed and five changed paths against the published parent. Reviewed 6,480 classes, 7,141 archived text entries, four nested JARs, both agent entry points, the loader metadata and both controls files. The delivery passed the server-list policy over all 1,919 files and 872 checked text inputs, with no automatic public-server menu shortcuts or shipped server-list seeds."
 }

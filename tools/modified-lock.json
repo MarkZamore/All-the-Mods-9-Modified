@@ -2730,10 +2730,10 @@
     },
     {
       "path": "launcher/jvm-args.txt",
-      "sha256": "a8b7553303f2e3213132c07ad365d58436146da087210adc0c5b3311a65a1d88",
-      "sizeBytes": 178,
+      "sha256": "838606724fb03194e69faaa12c0e5c836d10dd24345ea8eafbb3ca48e94833fb",
+      "sizeBytes": 166,
       "kind": "configuration",
-      "reason": "Pack-owned JVM selectors for native logging and experimental world confirmation."
+      "reason": "Pack-owned selectors for native logging and the two client compatibility agents."
     },
     {
       "path": "launcher/launch-context.json",
@@ -2792,11 +2792,11 @@
       "reason": "Pack-owned per-world waypoint association with exact KubeJS Rhino overloads and native-authorized saves junction; old generation data are preserved in local archives."
     },
     {
-      "path": "config/lanminecraft/illusioner-shooting-star-compat.jar",
-      "sizeBytes": 412967,
-      "sha256": "577f6a2d2c3715b7075b9b12348756a2431055845d629368f57399cd3eed28a5",
-      "kind": "illusioner-shooting-star-compatibility-agent",
-      "reason": "Compose the exact Shooting Star and Illusioner loading-screen conditions on the same native Forge callsite.",
+      "path": "config/lanminecraft/forge-client-compat.jar",
+      "sizeBytes": 420468,
+      "sha256": "59811a9f7d8273521e7c157ee48a85947ffb692bd61adb22ba8e57ea18543ca3",
+      "kind": "forge-client-compatibility-agent",
+      "reason": "Compose the Illusioner and Shooting Star screen conditions and confine Lucent block lighting to the logical client.",
       "inputs": {
         "shooting_star_demo": {
           "path": "mods/the-shooting-star-demo-1.5.1-forge.jar",
@@ -2805,6 +2805,18 @@
         "illusioner": {
           "path": "mods/the-illusioner-1.1.4-1.20.1-forge.jar",
           "sha256": "d8faf929c30abf2136515f93abd38a5c32db6760b33124e7e131e5d19046964c"
+        },
+        "lucent": {
+          "path": "mods/lucent-1.20.1-1.5.5.jar",
+          "sha256": "dc5fd7883dabcdaf3bf5ba02d8f20f2974df20edc6ce7a05e788d998fd3ef152"
+        },
+        "embeddium": {
+          "path": "mods/embeddium-0.3.31+mc1.20.1.jar",
+          "sha256": "eed3d1325f2acc2fd4e69bb495e5ccb91d962126ac5330f0582ebc2a3daf47fb"
+        },
+        "oculus": {
+          "path": "mods/mekalus-mc1.20.1-1.8.0.1.jar",
+          "sha256": "413fd1cd450cb1b3682651e505db0978fd688cc718a02d306ef5cbc93bc01eec"
         }
       },
       "platform": {

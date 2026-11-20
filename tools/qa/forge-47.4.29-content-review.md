@@ -22,6 +22,14 @@ production sync to the candidate verified 1,918 delivered files and retained
   screen decisions while retaining both author JARs. Its Java 17 probe
   verifies the exact Forge callsite and all four combinations of the two
   active flags. See [the compatibility source and build](../illusioner-compat/README.md).
+- A shader reload in the reopened mansion world crashed when a Burnt block
+  tick called Lucent's lighting hook on the integrated server thread while
+  Embeddium was replacing its chunk render manager. The Forge client
+  compatibility agent gates Lucent's hook to the logical client. The pinned
+  Forge packet handlers apply replicated block updates on the client thread
+  through the same hook. The Java 17 probe covers successful and failed
+  writes on both sides. Lucent, Embeddium and the author's Mekalus JARs are
+  delivered as their reviewed originals.
 - My Hero Craft was replaced with My Crafting Academia after bytecode review.
   My Hero Craft altered Minecraft's movement validation for all players.
   The subsequent native player save exposed a separate issue in My Crafting
@@ -70,14 +78,16 @@ publish all selected files and bundled resources.
   victory, and transfer back to the Overworld. The game saved the mansion's
   defeat and exited with code 0. After a full client restart, the same
   mansion remained defeated at the saved note block position.
-- A preceding candidate with the same Forge and rendering mods produced
-  distinct native frames with stock settings and MakeUp-UltraFast 9.3e. The
-  final roster stitched the block and painting atlases. Steam created a real
-  lobby on the final roster. Discovery matched the world title and host's
-  nickname, and the chat message appeared in the local and Steam paths. The
-  fixture had one Steam account, so a guest join and rejoin were not exercised.
+- After applying the Lucent fix, the same saved world opened with the
+  victory flag intact. Two reloads from stock rendering to MakeUp-UltraFast
+  9.3e and back completed. Native captures in the two modes decoded as
+  distinct 960×540 frames. The final roster stitched the block and painting
+  atlases. Steam created a real lobby after the shader changes. Discovery
+  matched the world title and host's nickname, and the chat message appeared
+  in the local and Steam paths. The fixture had one Steam account, so a
+  guest join and rejoin were not exercised.
 - The same two Slice & Dice conversion warnings for Delightful's matcha
   latte and ender nectar recipes were present on the previous public pack.
-- Restoration, 268 pack tests, five targeted keybind tests, 231 staged
-  payload assets, the library archive and the Steam-only server policy all
-  passed. The staged manifest lists 1,919 files.
+- Restoration, 268 pack tests, four targeted keybind tests, the preset
+  verifier, 231 staged payload assets, the library archive and the Steam-only
+  server policy all passed. The staged manifest lists 1,919 files.

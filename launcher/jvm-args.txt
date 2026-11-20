@@ -1,3 +1,3 @@
 -Dlog4j.configurationFile=config/log4j2.xml
 -javaagent:config/lanminecraft/experimental-world-confirmation.jar
--javaagent:config/lanminecraft/illusioner-shooting-star-compat.jar
+-javaagent:config/lanminecraft/forge-client-compat.jar
