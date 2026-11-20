@@ -56,6 +56,15 @@ python tools/experimental-warnings/policy.py --pack . --manifest dist/pack-manif
 1.19.2, 1.20.1, 1.21.1 и 26.3. JVM-проверки Java 8/21/25 выполнены без запуска
 полных модифицированных клиентов и визуального управления игрой.
 
+У Forge 47.4.x проверка стабильного мира переходит прямо к продолжению
+создания. Агент учитывает направление перехода и сохраняет штатное
+подтверждение устаревших настроек. На точных Forge-клиентах 47.4.0 и 47.4.29
+`NativeBytecodeProbe` проверил по одному изменённому классу и 32 метода.
+Для проверки перехода скомпилируйте `ForgeWorldCreationProbe.java` с
+`Lifecycle.java` из `tools/PackData/ExperimentalWarnings` LANMinecraft и
+запустите `net.minecraft.ForgeWorldCreationProbe` под Java 17 с
+`-Xverify:all -javaagent:<JAR>`.
+
 Агент меняет только переходы подтверждения. Экспериментальный Lifecycle остаётся
 в данных мира. Штатные предупреждения deprecated/customized, проверки версии,
 целостности мира и свободного места выполняются исходным игровым кодом.

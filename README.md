@@ -1,10 +1,14 @@
 # All The Mods 9 Modified
 
-По запросам пользователя удалены The Midnight Lurker 3.3.7, The One Who Watches 1.4.4 и Nostalgia 1.2.0 (8 ноября 2026). Текущий состав — 512 JAR, 537 полных mod ID и 427 модов/аддонов в игровом счётчике. Управление сохраняет 554 назначения. Исторические отчёты ниже относятся к своим прежним составам. Удаление может привести к потере контента этих модов в старых мирах. Перед обновлением покиньте измерения Nostalgia и сделайте резервную копию мира. Личные миры, профили и клаймы автоматически не переписываются; бесшовная миграция не заявляется. [Проверки удаления](tools/qa/nostalgia-removal-source.json).
+По запросам пользователя удалены The Midnight Lurker 3.3.7, The One Who Watches 1.4.4 и Nostalgia 1.2.0 (8 ноября 2026). Текущий состав — 533 JAR. Исторические отчёты ниже относятся к своим прежним составам. Удаление может привести к потере контента этих модов в старых мирах. Перед обновлением покиньте измерения Nostalgia и сделайте резервную копию мира. Личные миры, профили и клаймы автоматически не переписываются; бесшовная миграция не заявляется. [Проверки удаления](tools/qa/nostalgia-removal-source.json).
 
 Minecraft 1.20.1 загружается лаунчером из официального источника Mojang в общий кеш. Публичная поставка Modified не содержит оригинальный client JAR. Исходный `tools/upstream-lock.json` сохраняет официальный URL и контрольные суммы для восстановления и QA. Запись прежнего JAR в legacy-инвентаре позволяет распознать и убрать известную копию при обновлении установки.
 
-Отдельная чистая производная от оригинальной **ATM9 1.1.1**, **Minecraft 1.20.1**, **Forge 47.4.0**. ID: `all-the-mods-9-modified`; папка установки: `All the Mods 9 Modified`. Оригинальная ATM9 остаётся самостоятельным профилем. Для Modified подготовлены [собственный источник](https://github.com/MarkZamore/All-The-Mods-9-Modified) и профиль поставки `pack-latest`; прежние наработки Modified не служат входом для этой сборки.
+Сборка на основе **ATM9 1.1.1** для **Minecraft 1.20.1**. ATM9 Modified использует **Forge 47.4.29** для [The Illusioner 1.1.4](https://www.curseforge.com/minecraft/mc-mods/the-illusioner/files/9710724). ID `all-the-mods-9-modified`, папка установки `All the Mods 9 Modified`, канал поставки [pack-latest](https://github.com/MarkZamore/All-The-Mods-9-Modified/releases/tag/pack-latest).
+
+При импорте ATM9 1.1.1 авторский архив и его Forge 47.4.0 проверяются по `tools/upstream-lock.json`. Штатная подготовка берёт версию Forge для Modified из `loaderOverride` в `tools/modified-lock.json` и сверяет её с `portable-pack.json`. Смена Minecraft или Forge у автора требует проверки этой привязки перед выпуском.
+
+В категории «Хоррор» 40 модов после добавления Whispering Spirits. В категории «Аниме» 20 модов, включая 18 новых. RunicLib поставляется как зависимость Dungeon’s Delight. Точные файлы CurseForge и SHA-256 указаны в `tools/modified-lock.json`. Владелец сборки подтвердил разрешение на публикацию этих файлов и их ресурсов.
 
 **Предыдущий состав515:** по явному решению пользователя исключён Antlers. Предыдущие удаления, включая Presence Footsteps, Sound Physics Remastered и HSR Phainon, сохраняются. Самостоятельный Simple Voice Chat сохранён. Остальные515 JAR и все554 назначения пресета не изменены. Карточка540mod ID является source-проекцией исторического557 снимка; игровой счётчик и группировка библиотеки описываются отдельно. Steam-подключение подтверждено на лаунчере435: реальная проверка состояния сетевого канала приостанавливает чанки во время заполнения очереди и возобновляет их без изменения дальности. См. [двухсторонний отчёт](tools/qa/steam-network-435-acceptance.json).
 
@@ -26,19 +30,19 @@ Minecraft 1.20.1 загружается лаунчером из официаль
 
 ## Состав и граница исходной ATM9
 
-Текущий исходник содержит **512 JAR:431 BASE по членству +64 запрошенных дополнений +17 NEW dependencies**. Из BASE429 сохраняют исходные байты; два exact-hash исключения используют официальные AllTheLeaks1.1.4 и ModernFix5.25.0. Текущий состав закреплён в [active lock](tools/modified-lock.json), а исторические native-снимки ниже относятся только к своим ревизиям. Полная source-инвентаризация537 ID используется для проверки состава и памяти; игровой счётчик427 исключает только библиотеки/API. Подтверждённая Steam-сессия435 относится к историческим515 JAR; снятие диагностики и последующая правка JourneyMap не подменяются отдельным непроведённым игровым тестом.
+Текущий исходник содержит **533 JAR**: 431 из BASE, 84 запрошенных дополнения и 18 зависимостей. Точный состав закреплён в [active lock](tools/modified-lock.json). Исторические снимки ниже относятся к своим ревизиям.
 
-Из 431 BASE-мода **429 JAR сохраняют исходные SHA256**. Два exact-hash исключения используют официальные авторские файлы: AllTheLeaks1.0.7 →1.1.4 и ModernFix5.24.4 →5.25.0; исходный авторский lock остаётся неизменным. Исходный Iron’s Spells 3.4.0.11 и Cupboard 2.7 не обновляются ради аддонов. Снимок 1 794 авторских payload-файлов и 452 исходных pack ID остаётся в [экспорте 7097953](https://www.curseforge.com/minecraft/modpacks/all-the-mods-9/files/7097953), `tools/upstream-lock.json` и `tools/base-mod-ids.json`; effective поставка раскрывает два точных BASE JAR исключения и текстовые overlays.
+Из 431 BASE-мода **428 JAR сохраняют исходные SHA-256**. Для фактической поставки используются официальные AllTheLeaks 1.1.4, ModernFix 5.25.0 и SuperMartijn642’s Core Lib 1.1.26b. Последняя обновлена для Forge 47.4.29. Снимок 1 794 авторских файлов и 452 исходных ID хранится в авторском lock и `tools/base-mod-ids.json`. [Экспорт ATM9 1.1.1](https://www.curseforge.com/minecraft/modpacks/all-the-mods-9/files/7097953) · [Файл Core Lib](https://www.curseforge.com/minecraft/mc-mods/supermartijn642s-core-lib/files/9689182)
 
-Эту ревизию нельзя описывать как «только добавленные моды» или обещать побайтную неизменность всех 1 794 файлов. По отдельному запросу локализованы 107 BASE-текстовых ресурсов квестов: их SHA/размеры закреплены в quest `baseReplacements`. Отдельный `baseJarOverrides` разрешает только точные официальные AllTheLeaks1.1.4 и ModernFix5.25.0 и не расширяет locale-guard на JAR. ID, задачи, награды и зависимости квестов не заменяются этим переводом.
+По отдельному запросу локализованы 107 текстовых ресурсов квестов. Их SHA-256 и размеры закреплены в `baseReplacements`. Три замены JAR закреплены отдельно в `baseJarOverrides`. Перевод сохраняет ID, задачи, награды и зависимости квестов.
 
-Из512 JAR **510 файлов совпадают с соответствующими авторскими файлами**, включая официальный AllTheLeaks. Два NEW JAR — явно разрешённые производные: замороженный русский Verity6.0.0-ru.1 и Grotesque Steve1.4.2-quiet.1. Общий производный e4steam лаунчера описан отдельно. Собственные Forge-моды и Safety-framework не добавляются.
+Из 533 JAR **531 файл совпадает с соответствующим авторским файлом**, включая официальный AllTheLeaks. В поставке две явно разрешённые производные: русский Verity 6.0.0-ru.1 и Grotesque Steve 1.4.2-quiet.1. Общий компонент e4steam поставляется лаунчером.
 
-Карточка сохраняет исходные описание и обложку ATM9. Раздел **«Добавленные моды (Остальные в All The Mods 9)»** показывает66 добавленных самостоятельных модов и аддонов, распределённых в четыре категории. Alex’s Caves, Lucent и Simple Voice Chat являются самостоятельными модами, хотя первоначально скачаны как зависимости. Общая с ATM9 Render Patcher в добавлениях не повторяется. Встроенные API и настоящие библиотеки исключены из счётчика. Текущий `library/loaded-mods.json` проецирует537 pack ID из512 source JAR; это полная инвентаризация для проверки файлов и памяти, а не отображаемое число.
+Карточка сохраняет исходные описание и обложку ATM9. Раздел **«Добавленные моды (Остальные в All The Mods 9)»** показывает86 добавленных самостоятельных модов и аддонов, распределённых в четыре категории. Alex’s Caves, Lucent и Simple Voice Chat являются самостоятельными модами, хотя первоначально скачаны как зависимости. Общая с ATM9 Render Patcher в добавлениях не повторяется. Встроенные API и настоящие библиотеки исключены из счётчика.
 
 В лаунчере433 счётчик ATM9 равен361, Modified —427: разница66 совпадает с добавленными названиями, включая аддоны. Числа вычисляются по ID и ролям метаданных; полная native-инвентаризация и расчёт памяти сохраняются. `modCountScope=all` и категории принадлежат данным сборки, а не правилам C# по её имени. Контрольная база и пересчитываемые множества закреплены в `tools/library-presentation-policy.json`.
 
-### Ручные дополнения (64)
+### Ручные дополнения (84)
 
 Текущие файлы active lock; вид загрузки не определяет роль библиотеки в карточке.
 
@@ -108,8 +112,28 @@ Minecraft 1.20.1 загружается лаунчером из официаль
 | [Woodwalkers](https://www.curseforge.com/minecraft/mc-mods/woodwalkers) | `5.8.13` | `walkers` |
 | [Zombie Awareness](https://www.curseforge.com/minecraft/mc-mods/zombie-awareness) | `1.20.1-1.13.1` | `zombieawareness` |
 | [Zombie Nightmare Expansions](https://www.curseforge.com/minecraft/mc-mods/zoniex) | `1.2.1` | `zoniex` |
+| [The Illusioner](https://www.curseforge.com/minecraft/mc-mods/the-illusioner) | `1.1.4+1.20.1-forge` | `illusioner` |
+| [Anime Inventory Pets](https://www.curseforge.com/minecraft/mc-mods/animeinventorypets) | `1.0.0` | `anime_inventory_pets` |
+| [Azumanga-Craft](https://www.curseforge.com/minecraft/mc-mods/azumanga-craft) | `3.0.0` | `azumangacraft` |
+| [Craft Clover](https://www.curseforge.com/minecraft/mc-mods/craft-clover/files/5876750) | `1.0.0` | `block_clover` |
+| [Brizzle's Anime Paintings](https://www.curseforge.com/minecraft/mc-mods/brizzles-anime-paintings) | `1.0.0` | `brizzles_anime_paintings` |
+| [Weapons of the Multiverse](https://www.curseforge.com/minecraft/mc-mods/weapons-of-the-multiverse/files/6058245) | `1.0.0` | `weaponsofthemultiverse` |
+| [Scuffamon](https://www.curseforge.com/minecraft/mc-mods/scuffamon/files/5166769) | `1.4` | `scuffamon` |
+| [Demon Slayer Swords](https://www.curseforge.com/minecraft/mc-mods/demon-slayer-swords) | `1.20.1-1.1.1` | `demonslayerswords` |
+| [Dragon Ball Craft](https://www.curseforge.com/minecraft/mc-mods/dragon-ball-dragon-ball-craft) | `1.0.0` | `dragonbcraft` |
+| [Dungeon’s Delight](https://www.curseforge.com/minecraft/mc-mods/dungeons-delight) | `1.2.9` | `dungeonsdelight` |
+| [Sousou no Frieren Paintings](https://www.curseforge.com/minecraft/mc-mods/sousou-no-frieren-paintings/files/7432250) | `1.0.0` | `sousou_no_frieren_paintings` |
+| [SootSpriteCraft](https://www.curseforge.com/minecraft/mc-mods/sootspritecraft/files/7413740) | `0.0.1` | `sootspritecraft` |
+| [Naruto's Hitai-ate](https://www.curseforge.com/minecraft/mc-mods/narutos-hitai-ate) | `1.0.0` | `narutos_hitaiate` |
+| [Nenu's POP Plushies](https://www.curseforge.com/minecraft/mc-mods/nenus-pop-plushies) | `2.11.2` | `nenus_pop_plushies` |
+| [Emoflix’s Swords](https://www.curseforge.com/minecraft/mc-mods/emoflixs-swords/files/6693914) | `1.0.0` | `emoflix` |
+| [PKG Badges](https://www.curseforge.com/minecraft/mc-mods/pkgbadges) | `6.0` | `pkgbadges` |
+| [Sailor Moon](https://www.curseforge.com/minecraft/mc-mods/sailor-moon/files/6946768) | `1.1.0` | `sailor_moon` |
+| [The Era of Pirates](https://www.curseforge.com/minecraft/mc-mods/the-era-of-pirates/files/6022131) | `0.0.4` | `hutheeraofpirates` |
+| [Zoni's Anime Weapons](https://www.curseforge.com/minecraft/mc-mods/zonis-mod) | `4.1.8` | `zoni_mod` |
+| [Whispering Spirits](https://www.curseforge.com/minecraft/mc-mods/whispering-spirits) | `1.4.0` | `whispering_spirits` |
 
-### Добавленные зависимости (17)
+### Добавленные зависимости (18)
 
 Текущие файлы active lock; вид загрузки не определяет роль библиотеки в карточке.
 
@@ -132,6 +156,7 @@ Minecraft 1.20.1 загружается лаунчером из официаль
 | [simple-voice-chat](https://www.curseforge.com/minecraft/mc-mods/simple-voice-chat) | `1.20.1-2.6.22` | `voicechat, voicechat_api` |
 | [VillagersTradingPlus](https://www.curseforge.com/minecraft/mc-mods/villagerstradingplus) | `1.1.1+mc1.20.1` | `villagertradingplus` |
 | [YetAnotherConfigLib](https://www.curseforge.com/minecraft/mc-mods/yacl) | `3.6.6+1.20.1-forge` | `yet_another_config_lib_v3` |
+| [RunicLib](https://www.curseforge.com/minecraft/mc-mods/runiclib) | `4.3.11` | `runiclib` |
 
 KuroLib0.6 и Voice Chat Recording2.1 удалены после исключения их единственных потребителей; самостоятельный Simple Voice Chat сохранён. TravelOptics исключён вместе с обязательным аддоном Apex Tides по решению пользователя; базовый Iron’s Spells 3.4.0.11 не менялся.
 

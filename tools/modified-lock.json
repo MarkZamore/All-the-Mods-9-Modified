@@ -2,6 +2,16 @@
   "schemaVersion": 1,
   "upstreamLockSha256": "bb55c188102bd637b927dadbaa815d8e14e162761bda2abb52dd2cbcd9b2df18",
   "baseModIdsSha256": "c62039dbb6ead07c04992bfbbb3ae8bba68eccf8c0a318117e417b7c42321193",
+  "loaderOverride": {
+    "author": {
+      "type": "forge",
+      "version": "47.4.0"
+    },
+    "delivery": {
+      "type": "forge",
+      "version": "47.4.29"
+    }
+  },
   "baseReplacements": [
     {
       "path": "config/ftbquests/quests/chapters/ad_astra.snbt",
@@ -2006,6 +2016,22 @@
       "name": "The Shooting Star (Demo)"
     },
     {
+      "fileName": "the-illusioner-1.1.4-1.20.1-forge.jar",
+      "sha256": "d8faf929c30abf2136515f93abd38a5c32db6760b33124e7e131e5d19046964c",
+      "sizeBytes": 16327185,
+      "sourceUrl": "https://edge.forgecdn.net/files/9710/724/the-illusioner-1.1.4-1.20.1-forge.jar",
+      "projectId": 1805888,
+      "fileId": 9710724,
+      "path": "mods/the-illusioner-1.1.4-1.20.1-forge.jar",
+      "kind": "requested",
+      "version": "1.1.4+1.20.1-forge",
+      "modIds": [
+        "illusioner"
+      ],
+      "websiteUrl": "https://www.curseforge.com/minecraft/mc-mods/the-illusioner",
+      "name": "The Illusioner"
+    },
+    {
       "fileName": "the_after-0.1.2-forge-1.20.1.jar",
       "sha256": "f43700d5c7e2e55c59f42954fa4e67be057b5de97369b36efee73bf253217d6e",
       "sizeBytes": 8085111,
@@ -2285,9 +2311,339 @@
       ],
       "websiteUrl": "https://www.curseforge.com/minecraft/mc-mods/zoniex",
       "name": "Zombie Nightmare Expansions"
+    },
+    {
+      "fileName": "AnimeInventoryPets Mod [1.20.1].jar",
+      "sha256": "3209b7749c9f4a52cc746de004d92c0e462c2bbe33ec91b1306ed5acda97580c",
+      "sizeBytes": 156667,
+      "sourceUrl": "https://edge.forgecdn.net/files/5789/069/AnimeInventoryPets%20Mod%20%5B1.20.1%5D.jar",
+      "projectId": 499195,
+      "fileId": 5789069,
+      "path": "mods/AnimeInventoryPets Mod [1.20.1].jar",
+      "kind": "requested",
+      "version": "1.0.0",
+      "modIds": [
+        "anime_inventory_pets"
+      ],
+      "websiteUrl": "https://www.curseforge.com/minecraft/mc-mods/animeinventorypets",
+      "name": "Anime Inventory Pets"
+    },
+    {
+      "fileName": "azumangacraft-3.0.0-forge-1.20.1.jar",
+      "sha256": "5676b901acd3693aab2e48230103c8781ce74317332902c27ead3f0f27badcc2",
+      "sizeBytes": 3529363,
+      "sourceUrl": "https://edge.forgecdn.net/files/5803/480/azumangacraft-3.0.0-forge-1.20.1.jar",
+      "projectId": 1119659,
+      "fileId": 5803480,
+      "path": "mods/azumangacraft-3.0.0-forge-1.20.1.jar",
+      "kind": "requested",
+      "version": "3.0.0",
+      "modIds": [
+        "azumangacraft"
+      ],
+      "websiteUrl": "https://www.curseforge.com/minecraft/mc-mods/azumanga-craft",
+      "name": "Azumanga-Craft "
+    },
+    {
+      "fileName": "block_clover-1.0.0-forge-1.20.1.jar",
+      "sha256": "5a0e72c6f46a4364e3a350fbafeb06656a380871d9a823c42d9260b6c9e5861c",
+      "sizeBytes": 92778,
+      "sourceUrl": "https://edge.forgecdn.net/files/5876/750/block_clover-1.0.0-forge-1.20.1.jar",
+      "projectId": 1134653,
+      "fileId": 5876750,
+      "path": "mods/block_clover-1.0.0-forge-1.20.1.jar",
+      "kind": "requested",
+      "version": "1.0.0",
+      "modIds": [
+        "block_clover"
+      ],
+      "websiteUrl": "https://www.curseforge.com/minecraft/mc-mods/craft-clover",
+      "name": "Craft Clover"
+    },
+    {
+      "fileName": "BrizzlesAnimePaintings.jar",
+      "sha256": "6d9da6863d493ba25873ab38feb378baef2adeb01d4502bf841e78c2208044a5",
+      "sizeBytes": 11887436,
+      "sourceUrl": "https://edge.forgecdn.net/files/4742/626/BrizzlesAnimePaintings.jar",
+      "projectId": 910969,
+      "fileId": 4742626,
+      "path": "mods/BrizzlesAnimePaintings.jar",
+      "kind": "requested",
+      "version": "1.0.0",
+      "modIds": [
+        "brizzles_anime_paintings"
+      ],
+      "websiteUrl": "https://www.curseforge.com/minecraft/mc-mods/brizzles-anime-paintings",
+      "name": "Brizzle's Anime Paintings"
+    },
+    {
+      "fileName": "WeaponsOfTheMultiverse-1.0.0-forge-1.20.1.jar",
+      "sha256": "2d4c5709887a16ed1e68828cccbcae5362487bb472ab0358ca19d84f77b3e5c5",
+      "sizeBytes": 2905432,
+      "sourceUrl": "https://edge.forgecdn.net/files/6058/245/WeaponsOfTheMultiverse-1.0.0-forge-1.20.1.jar",
+      "projectId": 1029997,
+      "fileId": 6058245,
+      "path": "mods/WeaponsOfTheMultiverse-1.0.0-forge-1.20.1.jar",
+      "kind": "requested",
+      "version": "1.0.0",
+      "modIds": [
+        "weaponsofthemultiverse"
+      ],
+      "websiteUrl": "https://www.curseforge.com/minecraft/mc-mods/weapons-of-the-multiverse",
+      "name": "Weapons of the Multiverse"
+    },
+    {
+      "fileName": "Scuffamon 1.4 1.20.1.jar",
+      "sha256": "a648ca4537eb37333778b72832214691a3901c69eab22888b7d36832eb2fcd70",
+      "sizeBytes": 966935,
+      "sourceUrl": "https://edge.forgecdn.net/files/5166/769/Scuffamon%201.4%201.20.1.jar",
+      "projectId": 836584,
+      "fileId": 5166769,
+      "path": "mods/Scuffamon 1.4 1.20.1.jar",
+      "kind": "requested",
+      "version": "1.0",
+      "modIds": [
+        "scuffamon"
+      ],
+      "websiteUrl": "https://www.curseforge.com/minecraft/mc-mods/scuffamon",
+      "name": "Scuffamon"
+    },
+    {
+      "fileName": "demonslayerswords-1.20.1-1.1.1.jar",
+      "sha256": "6d45813dd10b34fc52ca57d6ef6bc0663ea0bf817df0c6074dd58306a040b817",
+      "sizeBytes": 270891,
+      "sourceUrl": "https://edge.forgecdn.net/files/5568/092/demonslayerswords-1.20.1-1.1.1.jar",
+      "projectId": 932355,
+      "fileId": 5568092,
+      "path": "mods/demonslayerswords-1.20.1-1.1.1.jar",
+      "kind": "requested",
+      "version": "1.20.1-1.1.1",
+      "modIds": [
+        "demonslayerswords"
+      ],
+      "websiteUrl": "https://www.curseforge.com/minecraft/mc-mods/demon-slayer-swords",
+      "name": "Demon Slayer Swords"
+    },
+    {
+      "fileName": "dragonbcraft-1.0.0-forge-1.20.1.jar",
+      "sha256": "a231789e3d6b1320dbc06819d63cd7ebb96dd5b779fccff07e4ed87c51d18968",
+      "sizeBytes": 383376,
+      "sourceUrl": "https://edge.forgecdn.net/files/6384/645/dragonbcraft-1.0.0-forge-1.20.1.jar",
+      "projectId": 1235442,
+      "fileId": 6384645,
+      "path": "mods/dragonbcraft-1.0.0-forge-1.20.1.jar",
+      "kind": "requested",
+      "version": "1.0.0",
+      "modIds": [
+        "dragonbcraft"
+      ],
+      "websiteUrl": "https://www.curseforge.com/minecraft/mc-mods/dragon-ball-dragon-ball-craft",
+      "name": "Dragon Ball Craft"
+    },
+    {
+      "fileName": "forge-dungeonsdelight-1.20.1-1.2.9.jar",
+      "sha256": "a7137a7216765575de5d8dbcd7884859164ac06d04837979a9a7f9f2173f2ea5",
+      "sizeBytes": 1842410,
+      "sourceUrl": "https://edge.forgecdn.net/files/6991/053/forge-dungeonsdelight-1.20.1-1.2.9.jar",
+      "projectId": 1258923,
+      "fileId": 6991053,
+      "path": "mods/forge-dungeonsdelight-1.20.1-1.2.9.jar",
+      "kind": "requested",
+      "version": "1.2.9",
+      "modIds": [
+        "dungeonsdelight"
+      ],
+      "websiteUrl": "https://www.curseforge.com/minecraft/mc-mods/dungeons-delight",
+      "name": "Dungeon’s Delight"
+    },
+    {
+      "fileName": "sousou_no_frieren_paintings-1.0.0-forge-1.20.1.jar",
+      "sha256": "3f78075025948b33324f24bf8318cd194a18cfb9e7b84699b2d78798f32d1522",
+      "sizeBytes": 7178628,
+      "sourceUrl": "https://edge.forgecdn.net/files/7432/250/sousou_no_frieren_paintings-1.0.0-forge-1.20.1.jar",
+      "projectId": 1423449,
+      "fileId": 7432250,
+      "path": "mods/sousou_no_frieren_paintings-1.0.0-forge-1.20.1.jar",
+      "kind": "requested",
+      "version": "1.0.0",
+      "modIds": [
+        "sousou_no_frieren_paintings"
+      ],
+      "websiteUrl": "https://www.curseforge.com/minecraft/mc-mods/sousou-no-frieren-paintings",
+      "name": "Sousou no Frieren Paintings"
+    },
+    {
+      "fileName": "sootspritecraft-0.0.1.jar",
+      "sha256": "13e087f2527093e86ca756f7abbea86e4528f9531fbd35f3bf9552d74ed7d6db",
+      "sizeBytes": 53870,
+      "sourceUrl": "https://edge.forgecdn.net/files/7413/740/sootspritecraft-0.0.1.jar",
+      "projectId": 1420023,
+      "fileId": 7413740,
+      "path": "mods/sootspritecraft-0.0.1.jar",
+      "kind": "requested",
+      "version": "0.0.1",
+      "modIds": [
+        "sootspritecraft"
+      ],
+      "websiteUrl": "https://www.curseforge.com/minecraft/mc-mods/sootspritecraft",
+      "name": "SootSpriteCraft"
+    },
+    {
+      "fileName": "narutos_hitaiate-1.0.0-forge-1.20.1.jar",
+      "sha256": "c2e4a9766b9540b041f8e6c3946a2f07095b1c81a7644c6f263ddf78f73a19e6",
+      "sizeBytes": 63148,
+      "sourceUrl": "https://edge.forgecdn.net/files/5664/811/narutos_hitaiate-1.0.0-forge-1.20.1.jar",
+      "projectId": 1090801,
+      "fileId": 5664811,
+      "path": "mods/narutos_hitaiate-1.0.0-forge-1.20.1.jar",
+      "kind": "requested",
+      "version": "1.0.0",
+      "modIds": [
+        "narutos_hitaiate"
+      ],
+      "websiteUrl": "https://www.curseforge.com/minecraft/mc-mods/narutos-hitai-ate",
+      "name": "Naruto's Hitai-ate"
+    },
+    {
+      "fileName": "nenus_pop_plushies-2.11.2-forge-1.20.1.jar",
+      "sha256": "6295ad4ccc477318f95404104ba11a737dd1943b9a4dd769dceee1bbe9ba6c1e",
+      "sizeBytes": 4049345,
+      "sourceUrl": "https://edge.forgecdn.net/files/9575/329/nenus_pop_plushies-2.11.2-forge-1.20.1.jar",
+      "projectId": 1426170,
+      "fileId": 9575329,
+      "path": "mods/nenus_pop_plushies-2.11.2-forge-1.20.1.jar",
+      "kind": "requested",
+      "version": "2.11.2",
+      "modIds": [
+        "nenus_pop_plushies"
+      ],
+      "websiteUrl": "https://www.curseforge.com/minecraft/mc-mods/nenus-pop-plushies",
+      "name": "Nenu's POP Plushies"
+    },
+    {
+      "fileName": "Emoflix's Swords.jar",
+      "sha256": "9dded6fff03da8f901c130845d1d7ba93b62c5f4bf6066db90260205a9822ce8",
+      "sizeBytes": 64610,
+      "sourceUrl": "https://edge.forgecdn.net/files/6693/914/Emoflix%27s%20Swords.jar",
+      "projectId": 1294011,
+      "fileId": 6693914,
+      "path": "mods/Emoflix's Swords.jar",
+      "kind": "requested",
+      "version": "1.0.0",
+      "modIds": [
+        "emoflix"
+      ],
+      "websiteUrl": "https://www.curseforge.com/minecraft/mc-mods/emoflixs-swords",
+      "name": "Emoflix’s Swords"
+    },
+    {
+      "fileName": "PKGBadges-6.0.jar",
+      "sha256": "831a7f0fe8215abd52583e1334af35124b2258bfc7762faf3e59dd8c0f309960",
+      "sizeBytes": 2028113,
+      "sourceUrl": "https://edge.forgecdn.net/files/7043/379/PKGBadges-6.0.jar",
+      "projectId": 889895,
+      "fileId": 7043379,
+      "path": "mods/PKGBadges-6.0.jar",
+      "kind": "requested",
+      "version": "6.0",
+      "modIds": [
+        "pkgbadges"
+      ],
+      "websiteUrl": "https://www.curseforge.com/minecraft/mc-mods/pkgbadges",
+      "name": "PKG Badges"
+    },
+    {
+      "fileName": "sailor_moon-1.1.0-forge-1.20.1.jar",
+      "sha256": "9c1469fa4b771084b819910709510a8864ccb502c1e34d21c9e67a6fd7d18e19",
+      "sizeBytes": 367451,
+      "sourceUrl": "https://edge.forgecdn.net/files/6946/768/sailor_moon-1.1.0-forge-1.20.1.jar",
+      "projectId": 1186215,
+      "fileId": 6946768,
+      "path": "mods/sailor_moon-1.1.0-forge-1.20.1.jar",
+      "kind": "requested",
+      "version": "1.0.0",
+      "modIds": [
+        "sailor_moon"
+      ],
+      "websiteUrl": "https://www.curseforge.com/minecraft/mc-mods/sailor-moon",
+      "name": "Sailor Moon"
+    },
+    {
+      "fileName": "TheEraOfPirates-0.0.4.jar",
+      "sha256": "d6df5c0e31de3ac9e131314408695281614615f311d81149d10a52b867a0a1cc",
+      "sizeBytes": 1041751,
+      "sourceUrl": "https://edge.forgecdn.net/files/6022/131/TheEraOfPirates-0.0.4.jar",
+      "projectId": 1080329,
+      "fileId": 6022131,
+      "path": "mods/TheEraOfPirates-0.0.4.jar",
+      "kind": "requested",
+      "version": "1.0.0",
+      "modIds": [
+        "hutheeraofpirates"
+      ],
+      "websiteUrl": "https://www.curseforge.com/minecraft/mc-mods/the-era-of-pirates",
+      "name": "The Era of Pirates"
+    },
+    {
+      "fileName": "zoni_mod-4.1.8-forge-1.20.1.jar",
+      "sha256": "bc65894259d72d310c79589c30eb7f24b19d6f1a67d53fc4ce93c6c71348a0f5",
+      "sizeBytes": 44559655,
+      "sourceUrl": "https://edge.forgecdn.net/files/9314/150/zoni_mod-4.1.8-forge-1.20.1.jar",
+      "projectId": 480494,
+      "fileId": 9314150,
+      "path": "mods/zoni_mod-4.1.8-forge-1.20.1.jar",
+      "kind": "requested",
+      "version": "4.1.8",
+      "modIds": [
+        "zoni_mod"
+      ],
+      "websiteUrl": "https://www.curseforge.com/minecraft/mc-mods/zonis-mod",
+      "name": "Zoni's Anime Weapons"
+    },
+    {
+      "fileName": "forge-runiclib-1.20.1-4.3.11.jar",
+      "sha256": "5e4c5d299b2beb746e7aa48add747654f617bd78da1e38996b29695d7698b260",
+      "sizeBytes": 336700,
+      "sourceUrl": "https://edge.forgecdn.net/files/8604/991/forge-runiclib-1.20.1-4.3.11.jar",
+      "projectId": 880879,
+      "fileId": 8604991,
+      "path": "mods/forge-runiclib-1.20.1-4.3.11.jar",
+      "kind": "dependency",
+      "version": "4.3.11",
+      "modIds": [
+        "runiclib"
+      ],
+      "websiteUrl": "https://www.curseforge.com/minecraft/mc-mods/runiclib",
+      "name": "RunicLib",
+      "requiredBy": [
+        "dungeonsdelight"
+      ]
+    },
+    {
+      "fileName": "WhisperingSpirits-forge-1.20.1-v1.4.0.jar",
+      "sha256": "c47efeff35cbcd3caa716672aba6a8120d638b64abb8a26b1a4b8dbca547dead",
+      "sizeBytes": 1938619,
+      "sourceUrl": "https://edge.forgecdn.net/files/5535/760/WhisperingSpirits-forge-1.20.1-v1.4.0.jar",
+      "projectId": 983684,
+      "fileId": 5535760,
+      "path": "mods/WhisperingSpirits-forge-1.20.1-v1.4.0.jar",
+      "kind": "requested",
+      "version": "1.4.0",
+      "modIds": [
+        "whispering_spirits"
+      ],
+      "websiteUrl": "https://www.curseforge.com/minecraft/mc-mods/whispering-spirits",
+      "name": "Whispering Spirits"
     }
   ],
   "supportFiles": [
+    {
+      "path": "config/lanminecraft/experimental-world-confirmation.jar",
+      "sha256": "8d91a80b1f16299c902ef678383312ea6c293a0fbd1a8fea66414ccda44a1d97",
+      "sizeBytes": 385373,
+      "kind": "experimental-confirmation-agent",
+      "reason": "Pack-owned native experimental world confirmation policy with separately pinned JVM selector and ownership."
+    },
     {
       "path": "config/log4j2.xml",
       "sha256": "9e7b9918b6ede54f7393ed3d307e51a2edb032b98c12f069f5df976bcf940b89",
@@ -2360,24 +2716,24 @@
     },
     {
       "path": "launcher/controls-guide.md",
-      "sha256": "c7d10764ba370df1b96b0663a61126cf1a223ec402c6d538e864294a2ba1e20a",
-      "sizeBytes": 11539,
+      "sha256": "8483407dbf0ee2be9a2b2d750926072e156ee481ebc7ddb4c437a52e03d1577d",
+      "sizeBytes": 12738,
       "kind": "resource",
-      "reason": "Optional key-only preset guide:515 source JARs after explicit Antlers removal; all554 mappings unchanged. No fresh native/application claim."
+      "reason": "Optional key-only guide for the 558 reviewed Options mappings. Records four new direct actions and the 554 preserved prior bindings after the final native Forge capture."
     },
     {
       "path": "launcher/controls-preset.txt",
-      "sha256": "946884959426d949ace22d3d75dd92086de3cf60409c9f6c4c7bd355c2d4120d",
-      "sizeBytes": 30694,
+      "sha256": "7f8034db0dabd64434ba532d09e97375550e4c863d232cf4fa53949a32904829",
+      "sizeBytes": 30935,
       "kind": "configuration",
-      "reason": "Optional key-only preset/guide: remove one unbound Presence Footsteps setting;516 source JARs/554 key names. Retained assignments unchanged; no fresh native/application claim."
+      "reason": "Optional key-only preset after the final native Forge 47.4.29 capture. Preserves 554 prior assignments and gives four newly registered actions distinct physical inputs."
     },
     {
       "path": "launcher/jvm-args.txt",
-      "sha256": "a1f3a734e672681e16e8db9a35ece57236720f99f95a85bac9eb2caac1e19d3c",
-      "sizeBytes": 44,
+      "sha256": "a8b7553303f2e3213132c07ad365d58436146da087210adc0c5b3311a65a1d88",
+      "sizeBytes": 178,
       "kind": "configuration",
-      "reason": "Permanent pack-owned native logging selector."
+      "reason": "Pack-owned JVM selectors for native logging and experimental world confirmation."
     },
     {
       "path": "launcher/launch-context.json",
@@ -2434,6 +2790,30 @@
       "sha256": "760e9a63ac9621027a5e3c0c8f6150ef3cc9c032908bef4f764e4af4862de21b",
       "kind": "resource",
       "reason": "Pack-owned per-world waypoint association with exact KubeJS Rhino overloads and native-authorized saves junction; old generation data are preserved in local archives."
+    },
+    {
+      "path": "config/lanminecraft/illusioner-shooting-star-compat.jar",
+      "sizeBytes": 412967,
+      "sha256": "577f6a2d2c3715b7075b9b12348756a2431055845d629368f57399cd3eed28a5",
+      "kind": "illusioner-shooting-star-compatibility-agent",
+      "reason": "Compose the exact Shooting Star and Illusioner loading-screen conditions on the same native Forge callsite.",
+      "inputs": {
+        "shooting_star_demo": {
+          "path": "mods/the-shooting-star-demo-1.5.1-forge.jar",
+          "sha256": "9a547738e3971b79f0e501fb3311e4abb74e48547acab6c921db9c8c3b1dd4f5"
+        },
+        "illusioner": {
+          "path": "mods/the-illusioner-1.1.4-1.20.1-forge.jar",
+          "sha256": "d8faf929c30abf2136515f93abd38a5c32db6760b33124e7e131e5d19046964c"
+        }
+      },
+      "platform": {
+        "minecraftVersion": "1.20.1",
+        "loader": {
+          "type": "forge",
+          "version": "47.4.29"
+        }
+      }
     }
   ],
   "questLocalization": {
@@ -2491,6 +2871,31 @@
         "websiteUrl": "https://www.curseforge.com/minecraft/mc-mods/modernfix"
       },
       "reason": "Authorized official BASE update retains Forge Ingredient soft-cache invalidation and includes broader author performance/compatibility fixes. Controlled synthetic stale-cache reproduction is not proof of the actual multiplayer incident trigger or resolution. Author config bytes and native options are preserved.",
+      "updatePolicy": "retain-pinned-compatible-jar"
+    },
+    {
+      "modId": "supermartijn642corelib",
+      "original": {
+        "path": "mods/supermartijn642corelib-1.1.18-forge-mc1.20.1.jar",
+        "sha256": "b89c7703f909c75bff8981be7a3c7219138e01549666bd5cd5c47a1d6330489e",
+        "sizeBytes": 515362,
+        "version": "1.1.18"
+      },
+      "replacement": {
+        "path": "mods/supermartijn642corelib-1.1.26b-forge-mc1.20.1.jar",
+        "fileName": "supermartijn642corelib-1.1.26b-forge-mc1.20.1.jar",
+        "sha256": "52c4c7b9c10d6a27c9d261770f02c321d346300373ea42cf36942ffa12d8c7d9",
+        "sizeBytes": 599964,
+        "sourceUrl": "https://edge.forgecdn.net/files/9689/182/supermartijn642corelib-1.1.26b-forge-mc1.20.1.jar",
+        "projectId": 454372,
+        "fileId": 9689182,
+        "version": "1.1.26+b",
+        "modIds": [
+          "supermartijn642corelib"
+        ],
+        "websiteUrl": "https://www.curseforge.com/minecraft/mc-mods/supermartijn642s-core-lib"
+      },
+      "reason": "Forge 47.4.29 changed the ObjectHolderRegistry.applyObjectHolders descriptor used in GameData.postRegisterEvents. The exact official 1.1.26b file supports both Forge invocation shapes and fixes the observed native startup failure.",
       "updatePolicy": "retain-pinned-compatible-jar"
     }
   ]

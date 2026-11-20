@@ -5,17 +5,17 @@
     "minecraftVersion": "1.20.1",
     "loader": {
       "type": "forge",
-      "version": "47.4.0"
+      "version": "47.4.29"
     }
   },
   "files": {
     "config/lanminecraft/experimental-world-confirmation.jar": {
-      "sizeBytes": 385299,
-      "sha256": "6db006392ebcfa6ce3cb5d21da8c8772eacfa388052e6e97bd5dd925734dd8bc"
+      "sizeBytes": 385373,
+      "sha256": "8d91a80b1f16299c902ef678383312ea6c293a0fbd1a8fea66414ccda44a1d97"
     },
     "launcher/jvm-args.txt": {
-      "sizeBytes": 111,
-      "sha256": "6d1dd3ea430f376463bda0836f9b2cdcb5ee6d032c17b1fdf9100b647d5323d2"
+      "sizeBytes": 178,
+      "sha256": "a8b7553303f2e3213132c07ad365d58436146da087210adc0c5b3311a65a1d88"
     },
     "launcher/pack-owned.txt": {
       "sizeBytes": 246,
@@ -27,6 +27,6 @@
     "revision": "f58c8bbd53c15bd0dd569b11ef1af2c9d7536418",
     "sha256": "3c46fc4fafd16dbbf0a955755bb10c1ae492da14d781da0efe2036b39bcc12f6"
   },
-  "nativeProof": "Mojang client bytecode 1.16.5, 1.18.2, 1.19.2, 1.20.1, 1.21.1, 26.3 analyzed with ASM BasicVerifier.",
-  "jvmProof": "Java 8, 21 and 25 -Xverify:all callback/lifecycle branch probes. Full modded clients and visual UI NOT RUN."
+  "nativeProof": "Forge 47.4.29 patched Minecraft 1.20.1 client SHA256 fcf268af27185c20922944615131a60bb31d5dc4dd08db31e5c19f75d8c81c83 matched the installer output SHA1. NativeBytecodeProbe passed 1 transformed class and 32 analyzed methods after adding support for the Forge stable continuation branch.",
+  "jvmProof": "Java 17 -Xverify:all passed the Forge continuation branch and the existing creation/import/opening callback probes. This standalone proof does not run the full modded client."
 }

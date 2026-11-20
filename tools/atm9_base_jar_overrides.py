@@ -1,4 +1,4 @@
-"""Exact approved AllTheLeaks and ModernFix BASE exceptions; not locale rules.
+"""Exact approved BASE JAR exceptions.
 
 Changing the replacement is a separately reviewed source/data change. A newer
 author version never silently replaces this pack-owned compatible pin.
@@ -29,16 +29,33 @@ APPROVED_MODERNFIX = {
     "version": "5.25.0+mc1.20.1", "modIds": ["modernfix"],
     "websiteUrl": "https://www.curseforge.com/minecraft/mc-mods/modernfix",
 }
+APPROVED_SUPERMARTIJN642_CORE_LIB = {
+    "path": "mods/supermartijn642corelib-1.1.26b-forge-mc1.20.1.jar",
+    "fileName": "supermartijn642corelib-1.1.26b-forge-mc1.20.1.jar",
+    "sha256": "52c4c7b9c10d6a27c9d261770f02c321d346300373ea42cf36942ffa12d8c7d9",
+    "sizeBytes": 599964,
+    "sourceUrl": "https://edge.forgecdn.net/files/9689/182/supermartijn642corelib-1.1.26b-forge-mc1.20.1.jar",
+    "projectId": 454372, "fileId": 9689182,
+    "version": "1.1.26+b", "modIds": ["supermartijn642corelib"],
+    "websiteUrl": "https://www.curseforge.com/minecraft/mc-mods/supermartijn642s-core-lib",
+}
 
 
 def approved():
-    # Resolve live constants per call: fixtures replace the exact approved
-    # payloads, while production remains pinned to these two records only.
-    return {"alltheleaks": APPROVED, "modernfix": APPROVED_MODERNFIX}
+    # Resolve live constants per call so fixtures can exercise synthetic pins.
+    return {
+        "alltheleaks": APPROVED,
+        "modernfix": APPROVED_MODERNFIX,
+        "supermartijn642corelib": APPROVED_SUPERMARTIJN642_CORE_LIB,
+    }
 
 
 def title(mod_id):
-    return {"alltheleaks": "AllTheLeaks", "modernfix": "ModernFix"}[mod_id]
+    return {
+        "alltheleaks": "AllTheLeaks",
+        "modernfix": "ModernFix",
+        "supermartijn642corelib": "SuperMartijn642's Core Lib",
+    }[mod_id]
 
 
 def require(ok, message):
@@ -48,7 +65,7 @@ def require(ok, message):
 def validate(pack, entries, upstream, rows, base_ids, api):
     """Pure lock/path validation, before any normalize/network/write operation."""
     pins = approved()
-    require(isinstance(entries, list) and len(entries) <= len(pins), "Only the two exact approved BASE JAR overrides are supported")
+    require(isinstance(entries, list) and len(entries) <= len(pins), "Only exact approved BASE JAR overrides are supported")
     require(all(isinstance(entry, dict) and set(entry) == {"modId", "original", "replacement", "reason", "updatePolicy"} for entry in entries),
             "Invalid BASE JAR override fields")
     ids = [entry["modId"] for entry in entries]

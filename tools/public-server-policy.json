@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "policy": "steam-only-automatic-server-list-v1",
-  "reviewedInventorySha256": "e8e36ed78d1887c2ad03af0323060c0a870c44e8e8d626b3a24a5deababcecbf",
+  "reviewedInventorySha256": "58bba1f755222ae8042a8d7ba0df6b3d6a20b403e37d1c3ba4f971df3bf581b6",
   "scope": "Exact current delivery, no shipped NBT seeds, reviewed text menus and automatic-list selectors. New binary/config/script/resource input requires explicit re-audit before publication.",
   "personalServerLists": "Never read or rewritten; manually saved addresses are preserved.",
   "autoRepin": false,
   "checkerSource": "https://github.com/MarkZamore/LANMinecraft/blob/940a5629a231eb608bad3b0772df0a5c8623966f/tools/PackData/ServerPolicy/public_server_policy.py",
-  "reviewedParentManifestRevision": "445eced8707cd2c8b1a15d4728ed6a7f60fe66c2",
-  "reviewedParentManifestSha256": "f2fd8eaccd970f56bdb693a82f380bae05453c4841287c214f9c5ca67ef951c4",
-  "reviewedPayloadChange": "Only config/memorysettings.json minimumClient.minimumClient changed from 8192 to 0.",
-  "reviewUpdateReason": "Reviewed only the experimental confirmation agent and its JVM/ownership selector. The agent contains no server-list seeding or menu/network code. Every other delivered file hash is identical."
+  "reviewedParentManifestRevision": "a73c77cea71802fa1faef20421b79eea074e758e",
+  "reviewedParentManifestSha256": "d9d008afd8b853a0e8e68e88757c6065da87876ae143a344422232d3d693e282",
+  "reviewedPayloadChange": "Added The Illusioner, 18 anime mods, Whispering Spirits and RunicLib. Replaced Core Lib 1.1.18 with the official 1.1.26b Forge build. Moved the loader to Forge 47.4.29, updated the experimental-world agent, added the Illusioner and Shooting Star client respawn-screen bridge with its JVM selector, and updated the controls preset and guide.",
+  "reviewUpdateReason": "Audited the 23 added, one removed and five changed paths against the published parent. Reviewed 6,480 classes, 7,141 archived text entries, four nested JARs, both agent entry points, the loader metadata and both controls files. The delivery passed the server-list policy over all 1,919 files and 872 checked text inputs, with no automatic public-server menu shortcuts or shipped server-list seeds."
 }

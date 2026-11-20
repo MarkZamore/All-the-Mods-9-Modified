@@ -567,3 +567,9 @@ key_supplementaries.keybind.quiver:key.keyboard.unknown
 key_tombstone.message.compendium:key.keyboard.unknown
 key_tombstone.message.config:key.keyboard.unknown
 key_tombstone.message.knowledge_of_death:key.keyboard.unknown
+
+# Anime content added with Forge 47.4.29
+key_key.block_clover.move_1:key.keyboard.z
+key_key.block_clover.move_2:key.keyboard.left.bracket
+key_key.block_clover.move_3:key.keyboard.right.bracket
+key_key.pkgbadges.bike_rider:key.keyboard.menu

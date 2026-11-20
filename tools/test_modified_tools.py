@@ -86,6 +86,40 @@ class ModifiedCompositionTests(unittest.TestCase):
         self.assertFalse(report["runtimeInventoryVerified"])
         self.assertFalse(report["runtimeAcceptanceClaimed"])
 
+    def test_delivery_uses_reviewed_forge_patch_and_retains_exact_author_lock(self):
+        upstream_lock = self.pack / "tools/upstream-lock.json"
+        author_bytes = upstream_lock.read_bytes()
+        author_loader = json.loads(author_bytes)["pack"]["loader"]
+        delivery_loader = {"type": "forge", "version": "47.4.29"}
+        descriptor = json.loads((self.pack / "portable-pack.json").read_bytes())
+        self.write("portable-pack.json", {**descriptor, "loader": delivery_loader})
+        with self.assertRaisesRegex(ValueError, "locked delivery loader"):
+            verify_modified.load_plan(self.pack)
+        self.lock["loaderOverride"] = {"author": author_loader, "delivery": delivery_loader}
+        self.save_lock()
+        with patch.object(restore_modified, "urlopen") as network:
+            for _ in range(2):
+                report = restore_modified.restore(self.pack, self.cache)
+                self.assertEqual(report["loader"], delivery_loader)
+                self.assertEqual(upstream_lock.read_bytes(), author_bytes)
+        network.assert_not_called()
+        self.write("portable-pack.json", {**descriptor, "loader": delivery_loader, "minecraftVersion": "1.20.2"})
+        with self.assertRaisesRegex(ValueError, "frozen author Minecraft version"):
+            verify_modified.load_plan(self.pack)
+
+    def test_missing_or_unreviewed_forge_loader_override_fails_closed(self):
+        author = {"type": "forge", "version": "47.4.0"}
+        for override, error in (
+            (None, "frozen author loader"),
+            ({"author": {"type": "forge", "version": "47.4.1"}, "delivery": author}, "frozen author loader"),
+            ({"author": author, "delivery": {"type": "forge", "version": "47.4.29-beta"}}, "exact numeric Forge"),
+            ({"author": author, "delivery": {"type": "neoforge", "version": "47.4.29"}}, "exact numeric Forge"),
+            ({"author": author, "delivery": {"type": "forge", "version": "47.5.0"}}, "newer patch"),
+            ({"author": author, "delivery": author}, "newer patch"),
+        ):
+            with self.subTest(override=override), self.assertRaisesRegex(ValueError, error):
+                verify_modified.locked_delivery_loader({"loaderOverride": override}, author)
+
     def test_restore_reapplies_warning_policy_to_updated_author_profile(self):
         config_path = "config/defaultsettings.json"
         self.write(config_path, {"mainProfile": "NewProfile"})
@@ -242,6 +276,68 @@ class ModifiedCompositionTests(unittest.TestCase):
         self.save_lock()
         self.assertEqual(verify_modified.verify(self.pack)["supportFiles"], 1)
         self.assert_base_unchanged()
+
+    def test_restore_verifies_exact_experimental_policy_before_download(self):
+        source = Path(__file__).resolve().parents[1]
+        agent = verify_modified.EXPERIMENTAL_AGENT
+        jvm = verify_modified.EXPERIMENTAL_JVM
+        owners = verify_modified.EXPERIMENTAL_OWNERSHIP
+        verifier = verify_modified.EXPERIMENTAL_POLICY + ".py"
+        for relative in (agent, jvm, verifier):
+            destination = self.pack / relative
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(source / relative, destination)
+        selector = self.pack / jvm
+        selector.write_text("\n".join(line for line in selector.read_text(encoding="utf-8").splitlines()
+                                      if line != "-javaagent:" + verify_modified.ILLUSIONER_COMPAT_AGENT) + "\n", encoding="utf-8")
+        records = {
+            relative: self.record(self.pack / relative) for relative in (agent, jvm, owners)
+        }
+        self.write(verify_modified.EXPERIMENTAL_POLICY + ".json", {
+            "schemaVersion": 1,
+            "policy": "skip-experimental-world-confirmation-v1",
+            "platform": {"minecraftVersion": "1.20.1", "loader": {"type": "forge", "version": "47.4.0"}},
+            "files": {path: {k: row[k] for k in ("sizeBytes", "sha256")} for path, row in records.items()},
+        })
+        self.lock["supportFiles"] = [
+            {**records[agent], "kind": verify_modified.EXPERIMENTAL_AGENT_KIND, "reason": "Exact pack-owned policy"},
+            {**records[jvm], "kind": "configuration", "reason": "Exact JVM selector"},
+        ]
+        self.save_lock()
+        with patch.object(restore_modified, "urlopen") as download:
+            self.assertEqual(restore_modified.restore(self.pack, self.cache)["supportFiles"], 2)
+            (self.pack / agent).write_bytes(b"unexpected binary")
+            with self.assertRaisesRegex(ValueError, "Experimental confirmation policy input changed"):
+                restore_modified.restore(self.pack, self.cache)
+        download.assert_not_called()
+
+    def test_other_executable_helpers_cannot_use_experimental_agent_kind(self):
+        row = {"path": "config/lanminecraft/other.jar", "sha256": "0" * 64, "sizeBytes": 1, "reason": "Fixture"}
+        with self.assertRaisesRegex(ValueError, "Unexpected path"):
+            verify_modified.validate_support_resource({**row, "kind": verify_modified.EXPERIMENTAL_AGENT_KIND})
+        with self.assertRaisesRegex(ValueError, "Executable/helper"):
+            verify_modified.validate_support_resource({**row, "kind": "resource"})
+
+    def test_illusioner_compatibility_is_bound_to_both_jars_and_loader(self):
+        path = verify_modified.ILLUSIONER_COMPAT_AGENT
+        (self.pack / path).parent.mkdir(parents=True, exist_ok=True)
+        (self.pack / path).write_bytes(b"test-only compatibility agent fixture")
+        (self.pack / verify_modified.EXPERIMENTAL_JVM).write_text("-javaagent:" + path + "\n", encoding="utf-8")
+        platform = {"minecraftVersion": "1.20.1", "loader": {"type": "forge", "version": "47.4.29"}}
+        inputs = {mod_id: {"path": f"mods/{mod_id}.jar", "sha256": "f" * 64}
+                  for mod_id in verify_modified.ILLUSIONER_COMPAT_IDS}
+        files = [{**record, "modIds": [mod_id]} for mod_id, record in inputs.items()]
+        support = [{**self.record(self.pack / path), "inputs": inputs, "platform": platform,
+                    "kind": verify_modified.ILLUSIONER_COMPAT_KIND, "reason": "Reviewed fix"}]
+        verify = verify_modified.verify_illusioner_compatibility
+        verify(self.pack, support, files, platform)
+        with self.assertRaisesRegex(ValueError, "both exact content mods"):
+            verify(self.pack, support, files[:1], platform)
+        with self.assertRaisesRegex(ValueError, "changed Minecraft/Forge platform"):
+            verify(self.pack, support, files, {**platform, "loader": {"type": "forge", "version": "47.4.30"}})
+        files[0]["sha256"] = "0" * 64
+        with self.assertRaisesRegex(ValueError, "changed Illusioner or Shooting Star bytes"):
+            verify(self.pack, support, files, platform)
 
     def test_final_verification_requires_real_current_source_jar_inventory(self):
         with self.assertRaisesRegex(ValueError, "Current exact-hash Forge loaded inventory"):

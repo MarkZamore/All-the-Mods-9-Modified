@@ -89,7 +89,9 @@ public final class ExperimentalWarningAgent implements ClassFileTransformer {
             if (!call.owner.equals("com/mojang/serialization/Lifecycle") || !call.name.equals("stable")) continue;
             AbstractInsnNode next = call.getNext();
             while (next != null && next.getOpcode() < 0) next = next.getNext();
-            if (!(next instanceof JumpInsnNode) || next.getOpcode() != Opcodes.IF_ACMPNE) continue;
+            if (!(next instanceof JumpInsnNode)) continue;
+            int comparison = next.getOpcode();
+            if (comparison != Opcodes.IF_ACMPNE && comparison != Opcodes.IF_ACMPEQ) continue;
             JumpInsnNode branch = (JumpInsnNode) next;
             InsnList approved = new InsnList();
             // Preserve the existing stable continuation and every deprecated/error path.
@@ -102,7 +104,9 @@ public final class ExperimentalWarningAgent implements ClassFileTransformer {
             approved.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "java/util/Objects", "equals",
                 "(Ljava/lang/Object;Ljava/lang/Object;)Z", false));
             approved.add(new InsnNode(Opcodes.IOR));
-            approved.add(new JumpInsnNode(Opcodes.IFEQ, branch.label));
+            // Forge's boolean bypass puts the stable continuation at the jump target.
+            int approvedBranch = comparison == Opcodes.IF_ACMPEQ ? Opcodes.IFNE : Opcodes.IFEQ;
+            approved.add(new JumpInsnNode(approvedBranch, branch.label));
             method.instructions.insertBefore(branch, approved);
             method.instructions.remove(branch);
             changed++;

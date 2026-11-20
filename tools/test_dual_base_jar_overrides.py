@@ -69,6 +69,40 @@ class DualBaseOverrideTests(unittest.TestCase):
                 self.fixture.lock['baseJarOverrides'] = entries; self.fixture.save_lock()
                 self.reject_before_write()
 
+    def test_core_library_compatibility_pin_restores_with_the_other_base_pins(self):
+        mod_id = 'supermartijn642corelib'
+        core_pin = policy.APPROVED_SUPERMARTIJN642_CORE_LIB
+        old_version = '1.1.18'
+        new_jar = single.jar(core_pin['version'], mod_id)
+        core_pin = {**core_pin, 'sizeBytes': len(new_jar), 'sha256': hashlib.sha256(new_jar).hexdigest()}
+        old_path = self.pack / 'mods/supermartijn642corelib-1.1.18-forge-mc1.20.1.jar'
+        old_path.write_bytes(single.jar(old_version, mod_id))
+        row = {**self.fixture.record(old_path), 'fileName': old_path.name,
+               'projectId': core_pin['projectId'], 'fileId': 6034718,
+               'sourceUrl': 'https://edge.forgecdn.net/files/6034/718/' + old_path.name}
+        self.upstream['files'].append(row)
+        self.fixture.write('tools/upstream-lock.json', self.upstream)
+        self.fixture.write('tools/base-mod-ids.json', {'modIds': ['alltheleaks', 'modernfix', mod_id]})
+        self.fixture.lock.update(upstreamLockSha256=verify.sha256(self.pack / 'tools/upstream-lock.json'),
+                                 baseModIdsSha256=verify.sha256(self.pack / 'tools/base-mod-ids.json'))
+        self.fixture.save_lock()
+        new_entry = {'modId': mod_id,
+                     'original': {**{key: row[key] for key in ('path', 'sha256', 'sizeBytes')}, 'version': old_version},
+                     'replacement': copy.deepcopy(core_pin), 'reason': 'Forge registry method compatibility',
+                     'updatePolicy': policy.POLICY}
+
+        with patch.object(policy, 'APPROVED_SUPERMARTIJN642_CORE_LIB', core_pin):
+            self.reject_before_write()
+            self.fixture.lock['baseJarOverrides'].append(new_entry)
+            self.fixture.save_lock()
+            (self.cache / 'additional' / core_pin['sha256']).write_bytes(new_jar)
+            for report in (self.restore(), self.restore()):
+                self.assertEqual(report['jarFiles'], 4)
+                self.assertEqual({entry['modId'] for entry in report['baseJarOverrides']},
+                                 {'alltheleaks', 'modernfix', mod_id})
+            self.assertFalse(old_path.exists())
+            self.assertEqual((self.pack / core_pin['path']).read_bytes(), new_jar)
+
     def test_unknown_second_source_bytes_are_not_replaced(self):
         self.modern_base.write_bytes(b'personal or corrupt bytes')
         self.reject_before_write()

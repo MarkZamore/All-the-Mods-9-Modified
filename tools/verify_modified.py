@@ -15,6 +15,7 @@ import hashlib
 import json
 from pathlib import Path, PurePosixPath
 import re
+import runpy
 import stat
 from urllib.parse import unquote, urlsplit
 import zipfile
@@ -55,6 +56,14 @@ APPROVED_GROTESQUE_QUIET = {
 }
 QUEST_MANIFEST_PATH = "tools/atm9_ru_quests/manifest.json"
 QUEST_PATCH_TOOL = "tools/atm9_ru_quests.py"
+EXPERIMENTAL_AGENT = "config/lanminecraft/experimental-world-confirmation.jar"
+EXPERIMENTAL_AGENT_KIND = "experimental-confirmation-agent"
+EXPERIMENTAL_POLICY = "tools/experimental-warnings/policy"
+EXPERIMENTAL_JVM = "launcher/jvm-args.txt"
+EXPERIMENTAL_OWNERSHIP = "launcher/pack-owned.txt"
+ILLUSIONER_COMPAT_AGENT = "config/lanminecraft/illusioner-shooting-star-compat.jar"
+ILLUSIONER_COMPAT_KIND = "illusioner-shooting-star-compatibility-agent"
+ILLUSIONER_COMPAT_IDS = {"illusioner", "shooting_star_demo"}
 
 
 def read_json(path: Path):
@@ -118,15 +127,60 @@ def check_file(pack: Path, row: dict, label="Locked file"):
 
 
 def validate_support_resource(row: dict):
-    """Support is configuration/data, with no standalone executable exception."""
+    """Keep executable support limited to the reviewed pack-owned agents."""
     validate_hash_record(row)
     relative = row["path"]
-    require(relative.split("/", 1)[0] in CONTENT_ROOTS - {"mods"}
-            and row.get("kind") in {"configuration", "resource"},
-            "Invalid support file kind/root: " + relative)
-    require(not relative.lower().endswith((".jar", ".class", ".java", ".dll", ".exe", ".cmd", ".bat", ".ps1")),
-            "Executable/helper files are not support resources: " + relative)
+    if row.get("kind") == EXPERIMENTAL_AGENT_KIND:
+        require(relative == EXPERIMENTAL_AGENT, "Unexpected path for the experimental confirmation agent: " + relative)
+    elif row.get("kind") == ILLUSIONER_COMPAT_KIND:
+        require(relative == ILLUSIONER_COMPAT_AGENT, "Unexpected path for the Illusioner compatibility agent: " + relative)
+    else:
+        require(relative.split("/", 1)[0] in CONTENT_ROOTS - {"mods"}
+                and row.get("kind") in {"configuration", "resource"},
+                "Invalid support file kind/root: " + relative)
+        require(not relative.lower().endswith((".jar", ".class", ".java", ".dll", ".exe", ".cmd", ".bat", ".ps1")),
+                "Executable/helper files are not support resources: " + relative)
     require(isinstance(row.get("reason"), str) and row["reason"].strip(), "Support file needs a reason: " + relative)
+
+
+def verify_experimental_confirmation(pack: Path, support: list[dict]):
+    receipt_path = target_path(pack, EXPERIMENTAL_POLICY + ".json")
+    rows = {row["path"]: row for row in support}
+    if not receipt_path.exists() and EXPERIMENTAL_AGENT not in rows:
+        return
+    require(receipt_path.is_file(), "Missing experimental confirmation policy receipt")
+    receipt = read_json(receipt_path)
+    require(receipt.get("schemaVersion") == 1 and receipt.get("policy") == "skip-experimental-world-confirmation-v1"
+            and set(receipt.get("files", {})) == {EXPERIMENTAL_AGENT, EXPERIMENTAL_JVM, EXPERIMENTAL_OWNERSHIP}
+            and not receipt.get("sources") and not receipt.get("sourceFiles"),
+            "Invalid experimental confirmation policy receipt")
+    for relative in (EXPERIMENTAL_AGENT, EXPERIMENTAL_JVM):
+        row = rows.get(relative)
+        require(row is not None, "Experimental confirmation policy is missing its support pin: " + relative)
+        require(receipt["files"][relative] == {k: row[k] for k in ("sizeBytes", "sha256")},
+                "Experimental confirmation policy differs from its support pin: " + relative)
+    target_path(pack, EXPERIMENTAL_OWNERSHIP)
+    verifier = target_path(pack, EXPERIMENTAL_POLICY + ".py")
+    require(verifier.is_file(), "Missing experimental confirmation policy verifier")
+    runpy.run_path(str(verifier))["verify"](pack)
+
+
+def verify_illusioner_compatibility(pack: Path, support: list[dict], files: list[dict], platform: dict):
+    agent = next((row for row in support if row["path"] == ILLUSIONER_COMPAT_AGENT), None)
+    targets = {mod_id: {key: row[key] for key in ("path", "sha256")}
+               for row in files for mod_id in row["modIds"] if mod_id in ILLUSIONER_COMPAT_IDS}
+    selector = target_path(pack, EXPERIMENTAL_JVM)
+    line = "-javaagent:" + ILLUSIONER_COMPAT_AGENT
+    occurrences = (selector.read_text(encoding="utf-8-sig").splitlines().count(line)
+                   if selector.is_file() else 0)
+    if targets.keys() != ILLUSIONER_COMPAT_IDS:
+        require(agent is None and occurrences == 0, "Illusioner compatibility agent requires both exact content mods")
+        return
+    require(agent is not None and occurrences == 1, "Illusioner and Shooting Star require their exact compatibility agent")
+    require(agent.get("inputs") == targets, "Review the compatibility agent for changed Illusioner or Shooting Star bytes")
+    version = {key: platform[key] for key in ("minecraftVersion", "loader")}
+    require(agent.get("platform") == version, "Review Illusioner compatibility for the changed Minecraft/Forge platform")
+    check_file(pack, agent, "Illusioner and Shooting Star compatibility agent")
 
 
 def verify_retired_diagnostics(pack: Path):
@@ -377,6 +431,28 @@ def validate_quest_localization(pack: Path, lock: dict, upstream: dict, original
     return profile, replacements, [localized.get(row["path"], row) for row in original_rows]
 
 
+def locked_delivery_loader(lock: dict, author: dict) -> dict:
+    if "loaderOverride" not in lock:
+        return author
+    override = lock["loaderOverride"]
+    require(isinstance(override, dict) and set(override) == {"author", "delivery"}
+            and override["author"] == author,
+            "Loader override does not match the frozen author loader")
+
+    versions = []
+    for loader in (author, override["delivery"]):
+        require(isinstance(loader, dict) and set(loader) == {"type", "version"}
+                and loader["type"] == "forge"
+                and isinstance(loader["version"], str)
+                and re.fullmatch(r"(?:0|[1-9][0-9]{0,4})(?:\.(?:0|[1-9][0-9]{0,4})){2}", loader["version"]),
+                "Loader override must use exact numeric Forge versions")
+        versions.append(tuple(map(int, loader["version"].split("."))))
+    author_version, delivery_version = versions
+    require(author_version[:2] == delivery_version[:2] and delivery_version[2] > author_version[2],
+            "Loader override must select a newer patch of the author Forge version")
+    return override["delivery"]
+
+
 def load_plan(pack: Path) -> dict:
     """Validate every lock/path/provenance before a restore can write anything."""
     pack = pack.absolute()
@@ -462,9 +538,13 @@ def load_plan(pack: Path) -> dict:
         seen.add(key)
         target_path(pack, row["path"])
     platform = read_json(target_path(pack, "portable-pack.json"))
+    delivery_loader = locked_delivery_loader(lock, upstream["pack"]["loader"])
     require(platform.get("minecraftVersion") == upstream["pack"]["minecraftVersion"] and
-            platform.get("loader") == upstream["pack"]["loader"], "Platform differs from the frozen author base")
+            platform.get("loader") == delivery_loader,
+            "Platform differs from the frozen author Minecraft version or locked delivery loader")
     require(platform.get("clientJar", "") == "", "The published pack must use the official Minecraft client download")
+    verify_experimental_confirmation(pack, support)
+    verify_illusioner_compatibility(pack, support, files, platform)
     return {"pack": pack, "lock": lock, "upstream": upstream, "baseRows": base_rows,
             "originalBaseRows": original_base_rows, "questLocalization": quest_profile, "baseReplacements": replacements,
             "memoryWarningPolicy": memory_warning,

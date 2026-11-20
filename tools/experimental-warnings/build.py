@@ -12,7 +12,7 @@ import tempfile
 ROOT = Path(__file__).resolve().parent
 
 
-def relocate(blob):
+def relocate(blob, destination=b"lanmc/experiment/asm"):
     if blob[:4] != b"\xca\xfe\xba\xbe":
         return blob
     count = int.from_bytes(blob[8:10], "big")
@@ -27,7 +27,7 @@ def relocate(blob):
             size = int.from_bytes(blob[offset : offset + 2], "big")
             offset += 2
             text = blob[offset : offset + size].replace(
-                b"org/objectweb/asm", b"lanmc/experiment/asm"
+                b"org/objectweb/asm", destination
             )
             offset += size
             output += len(text).to_bytes(2, "big") + text

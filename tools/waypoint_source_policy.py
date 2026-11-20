@@ -13,7 +13,7 @@ RECEIPT = 'tools/journeymap-waypoints-policy.json'
 SCRIPT = 'kubejs/startup_scripts/lanmc_journeymap_waypoint_policy.js'
 TEMPLATE = 'tools/client-policy/scripts/lanmc_journeymap_waypoint_policy.js'
 NATIVE_IDS = {'journeymap', 'kubejs', 'rhino'}
-PLATFORM = {'minecraftVersion': '1.20.1', 'loader': {'type': 'forge', 'version': '47.4.0'}}
+PLATFORM = {'minecraftVersion': '1.20.1', 'loader': {'type': 'forge', 'version': '47.4.29'}}
 
 
 def require(value, message):
