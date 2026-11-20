@@ -120,7 +120,7 @@ Minecraft 1.20.1 загружается лаунчером из официаль
 | [Weapons of the Multiverse](https://www.curseforge.com/minecraft/mc-mods/weapons-of-the-multiverse/files/6058245) | `1.0.0` | `weaponsofthemultiverse` |
 | [Scuffamon](https://www.curseforge.com/minecraft/mc-mods/scuffamon/files/5166769) | `1.4` | `scuffamon` |
 | [Demon Slayer Swords](https://www.curseforge.com/minecraft/mc-mods/demon-slayer-swords) | `1.20.1-1.1.1` | `demonslayerswords` |
-| [Dragon Ball Craft](https://www.curseforge.com/minecraft/mc-mods/dragon-ball-dragon-ball-craft) | `1.0.0` | `dragonbcraft` |
+| [Dr. STONE - Medusa](https://www.curseforge.com/minecraft/mc-mods/stonemedusa/files/7886545) | `1.20.1-0.1.1` | `stonemedusa` |
 | [Dungeon’s Delight](https://www.curseforge.com/minecraft/mc-mods/dungeons-delight) | `1.2.9` | `dungeonsdelight` |
 | [Sousou no Frieren Paintings](https://www.curseforge.com/minecraft/mc-mods/sousou-no-frieren-paintings/files/7432250) | `1.0.0` | `sousou_no_frieren_paintings` |
 | [SootSpriteCraft](https://www.curseforge.com/minecraft/mc-mods/sootspritecraft/files/7413740) | `0.0.1` | `sootspritecraft` |

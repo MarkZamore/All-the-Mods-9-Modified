@@ -91,3 +91,21 @@ publish all selected files and bundled resources.
 - Restoration, 268 pack tests, four targeted keybind tests, the preset
   verifier, 231 staged payload assets, the library archive and the Steam-only
   server policy all passed. The staged manifest lists 1,919 files.
+
+## Dragon Ball Craft replacement
+
+The release replaces Dragon Ball Craft with [Dr. STONE - Medusa 0.1.1](https://www.curseforge.com/minecraft/mc-mods/stonemedusa/files/7886545).
+The pinned JAR targets Forge 47.4.8 or later and registers no HUD or key
+mapping. Its input and render hooks are gated by petrification state.
+
+The production sync updated the technical world from the preceding published
+composition. Forge reported the retired `dragonbcraft` entries, then opened
+the world. The registry probe found Awakened Gas, Granolah and Black Frieza
+absent and added one Medusa through the native inventory command. The saved
+Illusioner victory remained intact, the player had no Weakness, and all 558
+key mappings matched the prior capture. Steam lobby metadata and chat passed.
+All dimensions saved and the client exited with code 0.
+
+The native inventory records 558 loaded pack IDs from 533 pinned JARs.
+All 268 pack tests and 232 staged payload archives passed, along with the
+controls preset and server-list policy.

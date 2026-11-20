@@ -19,7 +19,7 @@ public final class IllusionerQaAgent {
         new SmokeSample(Registry.ITEMS, "weaponsofthemultiverse:elucidator_sword"),
         new SmokeSample(Registry.ITEMS, "scuffamon:magikarp_spawn_egg"),
         new SmokeSample(Registry.ITEMS, "demonslayerswords:rengokusword"),
-        new SmokeSample(Registry.ITEMS, "dragonbcraft:goku_spawn_egg"),
+        new SmokeSample(Registry.ITEMS, "stonemedusa:medusa"),
         new SmokeSample(Registry.ITEMS, "dungeonsdelight:monster_pot"),
         new SmokeSample(Registry.PAINTING_VARIANTS, "sousou_no_frieren_paintings:fern"),
         new SmokeSample(Registry.ITEMS, "sootspritecraft:star_candy"),
@@ -223,6 +223,7 @@ public final class IllusionerQaAgent {
             case "marker" -> "amethystShards=" + inventoryCount(player,
                 field(type(MC + "world.item.Items"), "f_151049_").get(null));
             case "weakness" -> weakness(player);
+            case "anime-replacement" -> animeReplacement(server, player);
             case "smoke" -> smoke(server, player, world, encounter != null);
             case "platform" -> {
                 if (!world.startsWith(worldPrefix + "Fresh") || !dimension.equals("illusioner:corrupted_void") ||
@@ -346,6 +347,29 @@ public final class IllusionerQaAgent {
         if (result == 1) lastAssistedDisk = id;
         log("platformAssist disk=" + id + " x=" + x + " y=" + y + " z=" + z +
             " nativeTeleport=" + result);
+    }
+
+    private String animeReplacement(Object server, Object player) throws Exception {
+        Class<?> resource = type(MC + "resources.ResourceLocation");
+        var identifier = resource.getConstructor(String.class);
+        Class<?> registries = type("net.minecraftforge.registries.ForgeRegistries");
+        Class<?> registry = type("net.minecraftforge.registries.IForgeRegistry");
+        Method contains = method(registry, "containsKey", resource);
+        Object entities = field(registries, "ENTITY_TYPES").get(null);
+        for (String boss : List.of("awakened_gas", "granolah", "black_frieza")) {
+            if ((boolean) contains.invoke(entities, identifier.newInstance("dragonbcraft:" + boss)))
+                throw new IllegalStateException("Retired boss still registered: " + boss);
+        }
+        String itemId = "stonemedusa:medusa";
+        Object items = field(registries, "ITEMS").get(null);
+        Object id = identifier.newInstance(itemId);
+        if (!(boolean) contains.invoke(items, id)) throw new IllegalStateException("Medusa is not registered");
+        Object medusa = method(registry, "getValue", resource).invoke(items, id);
+        int before = inventoryCount(player, medusa);
+        int given = perform(server, player, "give @s " + itemId + " 1");
+        if (given != 1 || inventoryCount(player, medusa) != before + 1)
+            throw new IllegalStateException("Native inventory did not receive Medusa");
+        return "retiredBossesAbsent=3 medusaGiven=1";
     }
 
     private String smoke(Object server, Object player, String world, boolean activeEncounter) throws Exception {

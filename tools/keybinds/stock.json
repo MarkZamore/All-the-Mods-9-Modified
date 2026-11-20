@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "scope": "Forge 47.4.29 Options captured 558 unique mappings in the final 2026-11-20 candidate. All 554 prior names, categories, classes, contexts, current physical inputs and native default bindings matched. Four additional direct actions have unique physical keys in the optional pack preset.",
+  "scope": "Forge 47.4.29 Options captured 558 unique mappings in the final 2026-11-20 candidate. All 554 prior names, categories, classes, contexts, current physical inputs and native default bindings matched. Four additional direct actions have unique physical keys in the optional pack preset. Dragon Ball Craft was replaced with Dr. STONE - Medusa, and the same 558 native mappings were recaptured.",
   "englishNativeSha256": "1e2c66275c9b5a3d0a7c7d9e42bd58921520f3356acb4c35b4c0deb9f72d4459",
   "russianNativeSha256": "c45fed5c93946834c8294bbed0a0c3703410c86fa0cbc7da83f4e52cde42fad1",
   "sourceJars": {
@@ -285,7 +285,6 @@
     "domum_ornamentum-1.20.1-1.0.291-snapshot-universal.jar": "b8b95c1c2b8a3a871cdef56e4ec9231a57341864f730c9f1bacb5c8be4589bd2",
     "doomsday-1.0.0.jar": "c5a7a99d0515f1456e3c0525bb53250f3bee2393ffac3d1434e41ec809de338d",
     "door_knocker-forge-1.20.1-1.3.jar": "7171d91d9639d96b3cae7bc83caf9419522a28de511680f2fb459bf3b50a5ccf",
-    "dragonbcraft-1.0.0-forge-1.20.1.jar": "a231789e3d6b1320dbc06819d63cd7ebb96dd5b779fccff07e4ed87c51d18968",
     "durabilitytooltip-1.1.6-forge-mc1.20.jar": "52ea663852860eef04fc55268dd3890b338c9968f8b7f3ef504fd013a05b28f0",
     "dyenamics-1.20.1-3.2.0.jar": "02b787a6f730a5bce51695fd2ab5be509feb004433a6e285a4fbae4ab5e5918c",
     "dyenamicsandfriends-1.20.1-1.9.3.jar": "151e03e7278bf6bdacc953927ce266f85cc461bcabb855c97bf75a8a08582580",
@@ -481,6 +480,7 @@
     "sousou_no_frieren_paintings-1.0.0-forge-1.20.1.jar": "3f78075025948b33324f24bf8318cd194a18cfb9e7b84699b2d78798f32d1522",
     "spark-1.10.53-forge.jar": "eba275ba9bb0cb5b542913c3138c6eeff6a752898266d63d125d185f26ac99ed",
     "sparsestructuresreforged-1.20.1-1.0.0.jar": "b955cc73949ba257b2844f533f0aef765aa75ee4b0dbead8b6212bad3c06322d",
+    "stonemedusa-forge-1.20.1-0.1.1.jar": "5477bd126fb460fdb90dbeb6698a97594fefb9f42add1b77f19ac563a26332b9",
     "structure_gel-1.20.1-2.16.2.jar": "1584a5aed31c0f63e53c29d53cf4e069cdabf358e785240cc500702dc5918e3e",
     "structurize-1.20.1-1.0.784-snapshot.jar": "46dd926c8deaaedf2921f29701884f22aad7b1b92abdfb4ceebc9ee8e5046d3d",
     "stylecolonies-1.20.1-1.15.39.jar": "60a21fb6617046b08720e0a51598d612e38f8c4cfc5c7bcac808278b5e5759e5",

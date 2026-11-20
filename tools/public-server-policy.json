@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "policy": "steam-only-automatic-server-list-v1",
-  "reviewedInventorySha256": "3667b4a13c200de78eecc9ae80bc9bf6dd192b38fbeaf8fd0db3b95dcc034db8",
+  "reviewedInventorySha256": "c0123a33dc1bd4c12e8fff16996591f284e074d4a5c08ea8e0583f58b712ea32",
   "scope": "Exact current delivery, no shipped NBT seeds, reviewed text menus and automatic-list selectors. New binary/config/script/resource input requires explicit re-audit before publication.",
   "personalServerLists": "Never read or rewritten; manually saved addresses are preserved.",
   "autoRepin": false,
   "checkerSource": "https://github.com/MarkZamore/LANMinecraft/blob/940a5629a231eb608bad3b0772df0a5c8623966f/tools/PackData/ServerPolicy/public_server_policy.py",
-  "reviewedParentManifestRevision": "a73c77cea71802fa1faef20421b79eea074e758e",
-  "reviewedParentManifestSha256": "d9d008afd8b853a0e8e68e88757c6065da87876ae143a344422232d3d693e282",
-  "reviewedPayloadChange": "Added The Illusioner, 18 anime mods, Whispering Spirits and RunicLib. Replaced Core Lib 1.1.18 with the official 1.1.26b Forge build. Moved to Forge 47.4.29, updated the experimental-world agent, and added a client bridge for the Illusioner and Shooting Star respawn screen and Lucent's logical-client lighting hook. Reviewed the JVM selectors and controls preset.",
-  "reviewUpdateReason": "Audited the 23 added, one removed and five changed paths against the published parent. Reviewed 6,480 classes, 7,141 archived text entries, four nested JARs, both agent entry points, the loader metadata and both controls files. The delivery passed the server-list policy over all 1,919 files and 872 checked text inputs, with no automatic public-server menu shortcuts or shipped server-list seeds."
+  "reviewedParentManifestRevision": "420ccbdfc2724a44319622d5533aa7e90db9fb0b",
+  "reviewedParentManifestSha256": "4185132c3aff548fd991fbc3e486e38ac2cf06d56c8dc40f843cabe7fbff60e9",
+  "reviewedPayloadChange": "Replaced the exact Dragon Ball Craft JAR with the official Dr. STONE - Medusa JAR.",
+  "reviewUpdateReason": "Reviewed the only added JAR, its 61 main classes and bundled MixinExtras dependency. The mod listens for the Medusa activation phrase in server chat and ships no server-list seeds or connection UI."
 }

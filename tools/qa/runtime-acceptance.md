@@ -40,6 +40,10 @@ evidence label for every client process.
   `marker` reads the amethyst shard count in the current player's server inventory.
 - `weakness` reads the current player's native Weakness effect, including its
   remaining ticks and zero-based amplifier when present.
+- `anime-replacement` checks that Awakened Gas, Granolah and Black Frieza
+  are absent from the Forge entity registry. It then gives one Medusa and
+  verifies the server inventory received it. Use it in the migrated technical
+  world.
 - `keybindings` records the live Options key mappings after startup at the
   title screen or in the world. Compare the IDs and defaults in
   `keybindings.tsv` with the reviewed controls preset. This capture does not

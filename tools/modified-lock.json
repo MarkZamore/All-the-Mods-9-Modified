@@ -2425,20 +2425,21 @@
       "name": "Demon Slayer Swords"
     },
     {
-      "fileName": "dragonbcraft-1.0.0-forge-1.20.1.jar",
-      "sha256": "a231789e3d6b1320dbc06819d63cd7ebb96dd5b779fccff07e4ed87c51d18968",
-      "sizeBytes": 383376,
-      "sourceUrl": "https://edge.forgecdn.net/files/6384/645/dragonbcraft-1.0.0-forge-1.20.1.jar",
-      "projectId": 1235442,
-      "fileId": 6384645,
-      "path": "mods/dragonbcraft-1.0.0-forge-1.20.1.jar",
+      "fileName": "stonemedusa-forge-1.20.1-0.1.1.jar",
+      "sha256": "5477bd126fb460fdb90dbeb6698a97594fefb9f42add1b77f19ac563a26332b9",
+      "sizeBytes": 364838,
+      "sourceUrl": "https://mediafilez.forgecdn.net/files/7886/545/stonemedusa-forge-1.20.1-0.1.1.jar",
+      "projectId": 1138974,
+      "fileId": 7886545,
+      "path": "mods/stonemedusa-forge-1.20.1-0.1.1.jar",
       "kind": "requested",
-      "version": "1.0.0",
+      "version": "1.20.1-0.1.1",
       "modIds": [
-        "dragonbcraft"
+        "stonemedusa"
       ],
-      "websiteUrl": "https://www.curseforge.com/minecraft/mc-mods/dragon-ball-dragon-ball-craft",
-      "name": "Dragon Ball Craft"
+      "websiteUrl": "https://www.curseforge.com/minecraft/mc-mods/stonemedusa",
+      "name": "Dr. STONE - Medusa",
+      "license": "MIT"
     },
     {
       "fileName": "forge-dungeonsdelight-1.20.1-1.2.9.jar",
